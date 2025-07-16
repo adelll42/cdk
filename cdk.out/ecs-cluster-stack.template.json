@@ -607,6 +607,17 @@
    "Export": {
     "Name": "ecs-cluster-stack:ExportsOutputRefTranscendenceClusterC99018D32A383028"
    }
+  },
+  "ExportsOutputFnGetAttTranscendenceClusterDefaultAutoScalingGroupInstanceSecurityGroup85F6587FGroupId4ABF6A94": {
+   "Value": {
+    "Fn::GetAtt": [
+     "TranscendenceClusterDefaultAutoScalingGroupInstanceSecurityGroup85F6587F",
+     "GroupId"
+    ]
+   },
+   "Export": {
+    "Name": "ecs-cluster-stack:ExportsOutputFnGetAttTranscendenceClusterDefaultAutoScalingGroupInstanceSecurityGroup85F6587FGroupId4ABF6A94"
+   }
   }
  },
  "Rules": {

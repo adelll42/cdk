@@ -231,7 +231,8 @@
          },
          "ServiceName": {
           "Fn::ImportValue": "ecs-services-stack:ExportsOutputFnGetAttBackendService7A4224EEName55A8483C"
-         }
+         },
+         "FileName": "backend-imagedefinitions.json"
         },
         "InputArtifacts": [
          {
@@ -301,7 +302,8 @@
          },
          "ServiceName": {
           "Fn::ImportValue": "ecs-services-stack:ExportsOutputFnGetAttFrontendServiceBC94BA93NameC081D229"
-         }
+         },
+         "FileName": "frontend-imagedefinitions.json"
         },
         "InputArtifacts": [
          {

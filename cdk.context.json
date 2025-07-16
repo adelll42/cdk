@@ -3,5 +3,9 @@
     "eu-west-2a",
     "eu-west-2b",
     "eu-west-2c"
-  ]
+  ],
+  "hosted-zone:account=577638398727:domainName=dev.yospace.ai:region=eu-west-2": {
+    "Id": "/hostedzone/Z05665242V72OKDJR354Z",
+    "Name": "dev.yospace.ai."
+  }
 }

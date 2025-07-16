@@ -1,5 +1,16 @@
 {
  "Resources": {
+  "BackendLogGroupDA10F1B2": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "RetentionInDays": 731
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "ecs-services-stack/BackendLogGroup/Resource"
+   }
+  },
   "BackendTaskDefTaskRoleBA953A3B": {
    "Type": "AWS::IAM::Role",
    "Properties": {
@@ -39,8 +50,25 @@
         ]
        ]
       },
+      "LogConfiguration": {
+       "LogDriver": "awslogs",
+       "Options": {
+        "awslogs-group": {
+         "Ref": "BackendLogGroupDA10F1B2"
+        },
+        "awslogs-stream-prefix": "backend",
+        "awslogs-region": "eu-west-2"
+       }
+      },
       "MemoryReservation": 256,
-      "Name": "BackendContainer"
+      "Name": "BackendContainer",
+      "PortMappings": [
+       {
+        "ContainerPort": 3000,
+        "HostPort": 0,
+        "Protocol": "tcp"
+       }
+      ]
      }
     ],
     "ExecutionRoleArn": {
@@ -103,6 +131,19 @@
        "Action": "ecr:GetAuthorizationToken",
        "Effect": "Allow",
        "Resource": "*"
+      },
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BackendLogGroupDA10F1B2",
+         "Arn"
+        ]
+       }
       }
      ],
      "Version": "2012-10-17"
@@ -130,7 +171,17 @@
     },
     "DesiredCount": 1,
     "EnableECSManagedTags": false,
+    "HealthCheckGracePeriodSeconds": 60,
     "LaunchType": "EC2",
+    "LoadBalancers": [
+     {
+      "ContainerName": "BackendContainer",
+      "ContainerPort": 3000,
+      "TargetGroupArn": {
+       "Fn::ImportValue": "alb-stack:ExportsOutputRefBackendTargetGroupECF989302A4524FE"
+      }
+     }
+    ],
     "SchedulingStrategy": "REPLICA",
     "TaskDefinition": {
      "Ref": "BackendTaskDef6ECE986E"
@@ -141,6 +192,59 @@
    ],
    "Metadata": {
     "aws:cdk:path": "ecs-services-stack/BackendService/Service"
+   }
+  },
+  "BackendServiceSecurityGroup1fromalbstackAppALBSecurityGroup24B0BD5B32768655353046CBF2": {
+   "Type": "AWS::EC2::SecurityGroupIngress",
+   "Properties": {
+    "Description": "Load balancer to target",
+    "FromPort": 32768,
+    "GroupId": {
+     "Fn::ImportValue": "ecs-cluster-stack:ExportsOutputFnGetAttTranscendenceClusterDefaultAutoScalingGroupInstanceSecurityGroup85F6587FGroupId4ABF6A94"
+    },
+    "IpProtocol": "tcp",
+    "SourceSecurityGroupId": {
+     "Fn::ImportValue": "alb-stack:ExportsOutputFnGetAttAppALBSecurityGroup30809A2CGroupId7BC01C01"
+    },
+    "ToPort": 65535
+   },
+   "DependsOn": [
+    "BackendTaskDefTaskRoleBA953A3B"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "ecs-services-stack/BackendService/SecurityGroup1/from albstackAppALBSecurityGroup24B0BD5B:32768-65535"
+   }
+  },
+  "BackendServiceSecurityGroup1albstackAppALBSecurityGroup24B0BD5B3276865535fromD2CFDD01": {
+   "Type": "AWS::EC2::SecurityGroupEgress",
+   "Properties": {
+    "Description": "Load balancer to target",
+    "DestinationSecurityGroupId": {
+     "Fn::ImportValue": "ecs-cluster-stack:ExportsOutputFnGetAttTranscendenceClusterDefaultAutoScalingGroupInstanceSecurityGroup85F6587FGroupId4ABF6A94"
+    },
+    "FromPort": 32768,
+    "GroupId": {
+     "Fn::ImportValue": "alb-stack:ExportsOutputFnGetAttAppALBSecurityGroup30809A2CGroupId7BC01C01"
+    },
+    "IpProtocol": "tcp",
+    "ToPort": 65535
+   },
+   "DependsOn": [
+    "BackendTaskDefTaskRoleBA953A3B"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "ecs-services-stack/BackendService/SecurityGroup1/albstackAppALBSecurityGroup24B0BD5B:32768-65535 from"
+   }
+  },
+  "FrontendLogGroupCE4F14E0": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "RetentionInDays": 731
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "ecs-services-stack/FrontendLogGroup/Resource"
    }
   },
   "FrontendTaskDefTaskRoleDA0FD037": {
@@ -182,8 +286,25 @@
         ]
        ]
       },
+      "LogConfiguration": {
+       "LogDriver": "awslogs",
+       "Options": {
+        "awslogs-group": {
+         "Ref": "FrontendLogGroupCE4F14E0"
+        },
+        "awslogs-stream-prefix": "frontend",
+        "awslogs-region": "eu-west-2"
+       }
+      },
       "MemoryReservation": 256,
-      "Name": "FrontendContainer"
+      "Name": "FrontendContainer",
+      "PortMappings": [
+       {
+        "ContainerPort": 80,
+        "HostPort": 0,
+        "Protocol": "tcp"
+       }
+      ]
      }
     ],
     "ExecutionRoleArn": {
@@ -246,6 +367,19 @@
        "Action": "ecr:GetAuthorizationToken",
        "Effect": "Allow",
        "Resource": "*"
+      },
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "FrontendLogGroupCE4F14E0",
+         "Arn"
+        ]
+       }
       }
      ],
      "Version": "2012-10-17"
@@ -273,7 +407,24 @@
     },
     "DesiredCount": 1,
     "EnableECSManagedTags": false,
+    "HealthCheckGracePeriodSeconds": 60,
     "LaunchType": "EC2",
+    "LoadBalancers": [
+     {
+      "ContainerName": "FrontendContainer",
+      "ContainerPort": 80,
+      "TargetGroupArn": {
+       "Fn::ImportValue": "alb-stack:ExportsOutputRefDefaultFrontendTG22676E6D3F6AADA6"
+      }
+     },
+     {
+      "ContainerName": "FrontendContainer",
+      "ContainerPort": 80,
+      "TargetGroupArn": {
+       "Fn::ImportValue": "alb-stack:ExportsOutputRefFrontendTargetGroupED7B3E5DC932CE91"
+      }
+     }
+    ],
     "SchedulingStrategy": "REPLICA",
     "TaskDefinition": {
      "Ref": "FrontendTaskDef7D3FD156"
@@ -286,10 +437,52 @@
     "aws:cdk:path": "ecs-services-stack/FrontendService/Service"
    }
   },
+  "FrontendServiceSecurityGroup1fromalbstackAppALBSecurityGroup24B0BD5B327686553536EE6922": {
+   "Type": "AWS::EC2::SecurityGroupIngress",
+   "Properties": {
+    "Description": "Load balancer to target",
+    "FromPort": 32768,
+    "GroupId": {
+     "Fn::ImportValue": "ecs-cluster-stack:ExportsOutputFnGetAttTranscendenceClusterDefaultAutoScalingGroupInstanceSecurityGroup85F6587FGroupId4ABF6A94"
+    },
+    "IpProtocol": "tcp",
+    "SourceSecurityGroupId": {
+     "Fn::ImportValue": "alb-stack:ExportsOutputFnGetAttAppALBSecurityGroup30809A2CGroupId7BC01C01"
+    },
+    "ToPort": 65535
+   },
+   "DependsOn": [
+    "FrontendTaskDefTaskRoleDA0FD037"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "ecs-services-stack/FrontendService/SecurityGroup1/from albstackAppALBSecurityGroup24B0BD5B:32768-65535"
+   }
+  },
+  "FrontendServiceSecurityGroup1albstackAppALBSecurityGroup24B0BD5B3276865535fromCDAF472E": {
+   "Type": "AWS::EC2::SecurityGroupEgress",
+   "Properties": {
+    "Description": "Load balancer to target",
+    "DestinationSecurityGroupId": {
+     "Fn::ImportValue": "ecs-cluster-stack:ExportsOutputFnGetAttTranscendenceClusterDefaultAutoScalingGroupInstanceSecurityGroup85F6587FGroupId4ABF6A94"
+    },
+    "FromPort": 32768,
+    "GroupId": {
+     "Fn::ImportValue": "alb-stack:ExportsOutputFnGetAttAppALBSecurityGroup30809A2CGroupId7BC01C01"
+    },
+    "IpProtocol": "tcp",
+    "ToPort": 65535
+   },
+   "DependsOn": [
+    "FrontendTaskDefTaskRoleDA0FD037"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "ecs-services-stack/FrontendService/SecurityGroup1/albstackAppALBSecurityGroup24B0BD5B:32768-65535 from"
+   }
+  },
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/+VTsW7CMBD9FjxWxqWhExtQhi5VlLBFqHIvh7iS2Mh2iiLL/17FgYoWBEPVqYNl+T2/d/escyKS0aMYDeTeDqHcDit6Ez53ErZc7u2rRzAiw5225LRpZ9JiseIIVvgFJEtpt0+4JkWOtCrYHeNX1orP1+q7hM+1cpIUmhNsAUmO5oMAfzpGhwMXOMla+ExXWHgmrW1qLGctm3i2M6SAdrKaAuhGOTaJ+v5OJ5hCVyjCIfDfqDkzusIXWePh7Jksy6VOjyaprghaNil8WEXWOQmbZ1WRwi+ui3abvO77rx8gDkbXGu/hODhHu6XumLMq53BZ5k46rFE5e9LwJfiP/WOePkoIPEOrG3PhOwSetm6j1f1YPCRiPHi3REPTKEc1iqzfPwHsUnDZ4QMAAA=="
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/+1UwU4CMRD9FnokpeLiiRsgMSTGkIXbhpjaHWBkt920Xcmm6b+b7bJGQFHjwYuHpul7M+/NNJ1GLOrfsH6H701PpLtehk/MLSwXO8r35tGB0CyGQhm0SldjbiBZ0UxtDHP3anOnVVkkpEso6ZIVnaxlC3oKwjA3FdGSm90trFGiRSXb4J+sIHwsQydKWo4S9DtsKqIF6BcUcOoSFA6cp8hz5mKVQeIIN6bMIR1XZOhIoVEKLHg2EkKV0pJhyG9i6oSRqI0C7D39TTYlWmXwwHM4nB3habpU81ZkrjIUFRkmzq8Cay0X25nMUMIbV7f2NXlZ9zL7fz2fsuFR1YXTBg6PrjVbqpo5q+EcTtOF5RZykNYc2X4b/hvb0H3TeD3rEXNhxESp0VbhC5jJjQZj6Ck+DbD3NAajSv3BtHo6r+xWyasBu47YoPNsEHu6lBZzYHGzvwLgSRgHuQQAAA=="
    },
    "Metadata": {
     "aws:cdk:path": "ecs-services-stack/CDKMetadata/Default"

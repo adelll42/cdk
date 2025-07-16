@@ -1,0 +1,79 @@
+{
+ "Resources": {
+  "SSLCertificate2E93C565": {
+   "Type": "AWS::CertificateManager::Certificate",
+   "Properties": {
+    "DomainName": "transendence.dev.yospace.ai",
+    "DomainValidationOptions": [
+     {
+      "DomainName": "transendence.dev.yospace.ai",
+      "HostedZoneId": "Z05665242V72OKDJR354Z"
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "acm-stack/SSLCertificate"
+     }
+    ],
+    "ValidationMethod": "DNS"
+   },
+   "Metadata": {
+    "aws:cdk:path": "acm-stack/SSLCertificate/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/03LsQrCMBCA4WdpRknPmjq5dhepYylyplc92ySQpBYJeXdBB51++OBXoKo9VAWuodTDVM58hXSOqCfZUnCL19T1Etdw0eQjj6wxkkGLN/KQmp91SQzOINsjGhIHsRFSPHHmASM7+4Hcy2a0f0/O8vSKd2e3NewU1MUjMJd+sZENQfvtGxvfA96iAAAA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "acm-stack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "ExportsOutputRefSSLCertificate2E93C5653F34B868": {
+   "Value": {
+    "Ref": "SSLCertificate2E93C565"
+   },
+   "Export": {
+    "Name": "acm-stack:ExportsOutputRefSSLCertificate2E93C5653F34B868"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}
