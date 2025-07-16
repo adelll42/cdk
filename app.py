@@ -1,27 +1,72 @@
 #!/usr/bin/env python3
 import aws_cdk as cdk
+from aws_cdk import Environment
+from aws_cdk import aws_secretsmanager as secretsmanager
 
+from stacks.db_stack import DBStack
 from stacks.vpc_stack import VpcStack
 from stacks.security_stack import SecurityStack
 from stacks.s3_stack import S3Stack
-from stacks.codepipeline_backend import CodePipelineBackendStack
-from stacks.ecs_stack import ECSStack
+from stacks.ecs_services_stack import ECSServicesStack
+from stacks.pipeline_stack import PipelineStack
+from stacks.ecs_stack import ECSClusterStack
+
 
 app = cdk.App()
 
-vpc_stack = VpcStack(app, "vpc")
+env = Environment(account="577638398727", region="eu-west-2")
 
-security_stack = SecurityStack(app, "security-stack", vpc=vpc_stack.vpc)
+vpc_stack = VpcStack(
+    app, 
+    "vpc", 
+    env=env
+    )
 
-codepipeline_backend_stack = CodePipelineBackendStack(
+security_stack = SecurityStack(
+    app, 
+    "security-stack", 
+    vpc=vpc_stack.vpc, 
+    env=env
+    )
+
+s3_stack = S3Stack(
+    app, 
+    "s3-stack", 
+    env=env
+    )
+
+db_stack = DBStack(
     app,
-    "codepipeline-backend",
-    repo_name="your-repo-name",
-    branch="main"
-) 
+    "db-stack",
+    vpc=vpc_stack.vpc,
+    db_sg=security_stack.db_sg,
+    env=env
+    )
 
-s3_stack = S3Stack(app, "s3-stack")
+ecs_stack = ECSClusterStack(
+    app, 
+    "ecs-cluster-stack", 
+    vpc=vpc_stack.vpc, 
+    env=env
+    )
 
-ecs_stack = ECSStack(app, "ecs-stack", vpc=vpc_stack.vpc)
+ecs_services_stack = ECSServicesStack(
+    app,
+    "ecs-services-stack",
+    vpc=vpc_stack.vpc,
+    cluster=ecs_stack.cluster,
+    env=env
+    )
+
+
+pipeline_stack = PipelineStack(
+    app,
+    "pipeline",
+    vpc=vpc_stack.vpc,
+    cluster=ecs_stack.cluster,
+    backend_service=ecs_services_stack.backend_service,
+    frontend_service=ecs_services_stack.frontend_service,
+    env=env
+    )
 
 app.synth()

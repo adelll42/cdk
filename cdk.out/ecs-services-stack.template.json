@@ -1,0 +1,357 @@
+{
+ "Resources": {
+  "BackendTaskDefTaskRoleBA953A3B": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-services-stack/BackendTaskDef/TaskRole/Resource"
+   }
+  },
+  "BackendTaskDef6ECE986E": {
+   "Type": "AWS::ECS::TaskDefinition",
+   "Properties": {
+    "ContainerDefinitions": [
+     {
+      "Cpu": 256,
+      "Essential": true,
+      "Image": {
+       "Fn::Join": [
+        "",
+        [
+         "577638398727.dkr.ecr.eu-west-2.",
+         {
+          "Ref": "AWS::URLSuffix"
+         },
+         "/backend:latest"
+        ]
+       ]
+      },
+      "MemoryReservation": 256,
+      "Name": "BackendContainer"
+     }
+    ],
+    "ExecutionRoleArn": {
+     "Fn::GetAtt": [
+      "BackendTaskDefExecutionRoleC5A001DB",
+      "Arn"
+     ]
+    },
+    "Family": "ecsservicesstackBackendTaskDefCA4064CC",
+    "NetworkMode": "bridge",
+    "RequiresCompatibilities": [
+     "EC2"
+    ],
+    "TaskRoleArn": {
+     "Fn::GetAtt": [
+      "BackendTaskDefTaskRoleBA953A3B",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-services-stack/BackendTaskDef/Resource"
+   }
+  },
+  "BackendTaskDefExecutionRoleC5A001DB": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-services-stack/BackendTaskDef/ExecutionRole/Resource"
+   }
+  },
+  "BackendTaskDefExecutionRoleDefaultPolicyAA625660": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:BatchGetImage",
+        "ecr:GetDownloadUrlForLayer"
+       ],
+       "Effect": "Allow",
+       "Resource": "arn:aws:ecr:eu-west-2:577638398727:repository/backend"
+      },
+      {
+       "Action": "ecr:GetAuthorizationToken",
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "BackendTaskDefExecutionRoleDefaultPolicyAA625660",
+    "Roles": [
+     {
+      "Ref": "BackendTaskDefExecutionRoleC5A001DB"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-services-stack/BackendTaskDef/ExecutionRole/DefaultPolicy/Resource"
+   }
+  },
+  "BackendService7A4224EE": {
+   "Type": "AWS::ECS::Service",
+   "Properties": {
+    "Cluster": {
+     "Fn::ImportValue": "ecs-cluster-stack:ExportsOutputRefTranscendenceClusterC99018D32A383028"
+    },
+    "DeploymentConfiguration": {
+     "MaximumPercent": 200,
+     "MinimumHealthyPercent": 50
+    },
+    "DesiredCount": 1,
+    "EnableECSManagedTags": false,
+    "LaunchType": "EC2",
+    "SchedulingStrategy": "REPLICA",
+    "TaskDefinition": {
+     "Ref": "BackendTaskDef6ECE986E"
+    }
+   },
+   "DependsOn": [
+    "BackendTaskDefTaskRoleBA953A3B"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "ecs-services-stack/BackendService/Service"
+   }
+  },
+  "FrontendTaskDefTaskRoleDA0FD037": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-services-stack/FrontendTaskDef/TaskRole/Resource"
+   }
+  },
+  "FrontendTaskDef7D3FD156": {
+   "Type": "AWS::ECS::TaskDefinition",
+   "Properties": {
+    "ContainerDefinitions": [
+     {
+      "Cpu": 256,
+      "Essential": true,
+      "Image": {
+       "Fn::Join": [
+        "",
+        [
+         "577638398727.dkr.ecr.eu-west-2.",
+         {
+          "Ref": "AWS::URLSuffix"
+         },
+         "/frontend:latest"
+        ]
+       ]
+      },
+      "MemoryReservation": 256,
+      "Name": "FrontendContainer"
+     }
+    ],
+    "ExecutionRoleArn": {
+     "Fn::GetAtt": [
+      "FrontendTaskDefExecutionRoleE7329A09",
+      "Arn"
+     ]
+    },
+    "Family": "ecsservicesstackFrontendTaskDefBB082465",
+    "NetworkMode": "bridge",
+    "RequiresCompatibilities": [
+     "EC2"
+    ],
+    "TaskRoleArn": {
+     "Fn::GetAtt": [
+      "FrontendTaskDefTaskRoleDA0FD037",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-services-stack/FrontendTaskDef/Resource"
+   }
+  },
+  "FrontendTaskDefExecutionRoleE7329A09": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-services-stack/FrontendTaskDef/ExecutionRole/Resource"
+   }
+  },
+  "FrontendTaskDefExecutionRoleDefaultPolicy48DF7F3B": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:BatchGetImage",
+        "ecr:GetDownloadUrlForLayer"
+       ],
+       "Effect": "Allow",
+       "Resource": "arn:aws:ecr:eu-west-2:577638398727:repository/frontend"
+      },
+      {
+       "Action": "ecr:GetAuthorizationToken",
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "FrontendTaskDefExecutionRoleDefaultPolicy48DF7F3B",
+    "Roles": [
+     {
+      "Ref": "FrontendTaskDefExecutionRoleE7329A09"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-services-stack/FrontendTaskDef/ExecutionRole/DefaultPolicy/Resource"
+   }
+  },
+  "FrontendServiceBC94BA93": {
+   "Type": "AWS::ECS::Service",
+   "Properties": {
+    "Cluster": {
+     "Fn::ImportValue": "ecs-cluster-stack:ExportsOutputRefTranscendenceClusterC99018D32A383028"
+    },
+    "DeploymentConfiguration": {
+     "MaximumPercent": 200,
+     "MinimumHealthyPercent": 50
+    },
+    "DesiredCount": 1,
+    "EnableECSManagedTags": false,
+    "LaunchType": "EC2",
+    "SchedulingStrategy": "REPLICA",
+    "TaskDefinition": {
+     "Ref": "FrontendTaskDef7D3FD156"
+    }
+   },
+   "DependsOn": [
+    "FrontendTaskDefTaskRoleDA0FD037"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "ecs-services-stack/FrontendService/Service"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/+VTsW7CMBD9FjxWxqWhExtQhi5VlLBFqHIvh7iS2Mh2iiLL/17FgYoWBEPVqYNl+T2/d/escyKS0aMYDeTeDqHcDit6Ez53ErZc7u2rRzAiw5225LRpZ9JiseIIVvgFJEtpt0+4JkWOtCrYHeNX1orP1+q7hM+1cpIUmhNsAUmO5oMAfzpGhwMXOMla+ExXWHgmrW1qLGctm3i2M6SAdrKaAuhGOTaJ+v5OJ5hCVyjCIfDfqDkzusIXWePh7Jksy6VOjyaprghaNil8WEXWOQmbZ1WRwi+ui3abvO77rx8gDkbXGu/hODhHu6XumLMq53BZ5k46rFE5e9LwJfiP/WOePkoIPEOrG3PhOwSetm6j1f1YPCRiPHi3REPTKEc1iqzfPwHsUnDZ4QMAAA=="
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-services-stack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "ExportsOutputFnGetAttBackendService7A4224EEName55A8483C": {
+   "Value": {
+    "Fn::GetAtt": [
+     "BackendService7A4224EE",
+     "Name"
+    ]
+   },
+   "Export": {
+    "Name": "ecs-services-stack:ExportsOutputFnGetAttBackendService7A4224EEName55A8483C"
+   }
+  },
+  "ExportsOutputFnGetAttFrontendServiceBC94BA93NameC081D229": {
+   "Value": {
+    "Fn::GetAtt": [
+     "FrontendServiceBC94BA93",
+     "Name"
+    ]
+   },
+   "Export": {
+    "Name": "ecs-services-stack:ExportsOutputFnGetAttFrontendServiceBC94BA93NameC081D229"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

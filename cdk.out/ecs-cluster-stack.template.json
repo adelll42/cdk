@@ -1,0 +1,639 @@
+{
+ "Resources": {
+  "TranscendenceClusterC99018D3": {
+   "Type": "AWS::ECS::Cluster",
+   "Properties": {
+    "ClusterName": "transcendence-cluster"
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack/TranscendenceCluster/Resource"
+   }
+  },
+  "TranscendenceClusterDefaultAutoScalingGroupInstanceSecurityGroup85F6587F": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup/InstanceSecurityGroup",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup"
+     }
+    ],
+    "VpcId": {
+     "Fn::ImportValue": "vpc:ExportsOutputReftransendenceVPCE5114C9175EDFA28"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup/InstanceSecurityGroup/Resource"
+   }
+  },
+  "TranscendenceClusterDefaultAutoScalingGroupInstanceRole55B3FEA7": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ec2.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup/InstanceRole/Resource"
+   }
+  },
+  "TranscendenceClusterDefaultAutoScalingGroupInstanceRoleDefaultPolicy6448AFDC": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "ecs:DeregisterContainerInstance",
+        "ecs:RegisterContainerInstance",
+        "ecs:Submit*"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "TranscendenceClusterC99018D3",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "ecs:Poll",
+        "ecs:StartTelemetrySession"
+       ],
+       "Condition": {
+        "ArnEquals": {
+         "ecs:cluster": {
+          "Fn::GetAtt": [
+           "TranscendenceClusterC99018D3",
+           "Arn"
+          ]
+         }
+        }
+       },
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "ecr:GetAuthorizationToken",
+        "ecs:DiscoverPollEndpoint",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "TranscendenceClusterDefaultAutoScalingGroupInstanceRoleDefaultPolicy6448AFDC",
+    "Roles": [
+     {
+      "Ref": "TranscendenceClusterDefaultAutoScalingGroupInstanceRole55B3FEA7"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup/InstanceRole/DefaultPolicy/Resource"
+   }
+  },
+  "TranscendenceClusterDefaultAutoScalingGroupInstanceProfileE6322D97": {
+   "Type": "AWS::IAM::InstanceProfile",
+   "Properties": {
+    "Roles": [
+     {
+      "Ref": "TranscendenceClusterDefaultAutoScalingGroupInstanceRole55B3FEA7"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup/InstanceProfile"
+   }
+  },
+  "TranscendenceClusterDefaultAutoScalingGroupLaunchTemplate5F423B38": {
+   "Type": "AWS::EC2::LaunchTemplate",
+   "Properties": {
+    "LaunchTemplateData": {
+     "IamInstanceProfile": {
+      "Arn": {
+       "Fn::GetAtt": [
+        "TranscendenceClusterDefaultAutoScalingGroupInstanceProfileE6322D97",
+        "Arn"
+       ]
+      }
+     },
+     "ImageId": {
+      "Ref": "SsmParameterValueawsserviceecsoptimizedamiamazonlinux2recommendedimageidC96584B6F00A464EAD1953AFF4B05118Parameter"
+     },
+     "InstanceType": "t3.small",
+     "Monitoring": {
+      "Enabled": false
+     },
+     "SecurityGroupIds": [
+      {
+       "Fn::GetAtt": [
+        "TranscendenceClusterDefaultAutoScalingGroupInstanceSecurityGroup85F6587F",
+        "GroupId"
+       ]
+      }
+     ],
+     "TagSpecifications": [
+      {
+       "ResourceType": "instance",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup/LaunchTemplate"
+        }
+       ]
+      },
+      {
+       "ResourceType": "volume",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup/LaunchTemplate"
+        }
+       ]
+      }
+     ],
+     "UserData": {
+      "Fn::Base64": {
+       "Fn::Join": [
+        "",
+        [
+         "#!/bin/bash\necho ECS_CLUSTER=",
+         {
+          "Ref": "TranscendenceClusterC99018D3"
+         },
+         " >> /etc/ecs/ecs.config"
+        ]
+       ]
+      }
+     }
+    },
+    "TagSpecifications": [
+     {
+      "ResourceType": "launch-template",
+      "Tags": [
+       {
+        "Key": "Name",
+        "Value": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup/LaunchTemplate"
+       }
+      ]
+     }
+    ]
+   },
+   "DependsOn": [
+    "TranscendenceClusterDefaultAutoScalingGroupInstanceRoleDefaultPolicy6448AFDC",
+    "TranscendenceClusterDefaultAutoScalingGroupInstanceRole55B3FEA7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup/LaunchTemplate/Resource"
+   }
+  },
+  "TranscendenceClusterDefaultAutoScalingGroupASG1AC04912": {
+   "Type": "AWS::AutoScaling::AutoScalingGroup",
+   "Properties": {
+    "LaunchTemplate": {
+     "LaunchTemplateId": {
+      "Ref": "TranscendenceClusterDefaultAutoScalingGroupLaunchTemplate5F423B38"
+     },
+     "Version": {
+      "Fn::GetAtt": [
+       "TranscendenceClusterDefaultAutoScalingGroupLaunchTemplate5F423B38",
+       "LatestVersionNumber"
+      ]
+     }
+    },
+    "MaxSize": "2",
+    "MinSize": "1",
+    "Tags": [
+     {
+      "Key": "Name",
+      "PropagateAtLaunch": true,
+      "Value": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup"
+     }
+    ],
+    "VPCZoneIdentifier": [
+     {
+      "Fn::ImportValue": "vpc:ExportsOutputReftransendenceVPCPublicSubnet1Subnet571CA78A57315E29"
+     },
+     {
+      "Fn::ImportValue": "vpc:ExportsOutputReftransendenceVPCPublicSubnet2Subnet630FF9A89505A940"
+     }
+    ]
+   },
+   "UpdatePolicy": {
+    "AutoScalingReplacingUpdate": {
+     "WillReplace": true
+    },
+    "AutoScalingScheduledAction": {
+     "IgnoreUnmodifiedGroupSizeProperties": true
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup/ASG"
+   }
+  },
+  "TranscendenceClusterDefaultAutoScalingGroupDrainECSHookFunctionServiceRole2978D9A7": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup/DrainECSHook/Function/ServiceRole/Resource"
+   }
+  },
+  "TranscendenceClusterDefaultAutoScalingGroupDrainECSHookFunctionServiceRoleDefaultPolicy58C09FA8": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "ec2:DescribeHosts",
+        "ec2:DescribeInstanceAttribute",
+        "ec2:DescribeInstanceStatus",
+        "ec2:DescribeInstances"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "autoscaling:CompleteLifecycleAction",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:aws:autoscaling:eu-west-2:577638398727:autoScalingGroup:*:autoScalingGroupName/",
+          {
+           "Ref": "TranscendenceClusterDefaultAutoScalingGroupASG1AC04912"
+          }
+         ]
+        ]
+       }
+      },
+      {
+       "Action": [
+        "ecs:DescribeContainerInstances",
+        "ecs:DescribeTasks",
+        "ecs:ListTasks",
+        "ecs:UpdateContainerInstancesState"
+       ],
+       "Condition": {
+        "ArnEquals": {
+         "ecs:cluster": {
+          "Fn::GetAtt": [
+           "TranscendenceClusterC99018D3",
+           "Arn"
+          ]
+         }
+        }
+       },
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "ecs:ListContainerInstances",
+        "ecs:SubmitContainerStateChange",
+        "ecs:SubmitTaskStateChange"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "TranscendenceClusterC99018D3",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "TranscendenceClusterDefaultAutoScalingGroupDrainECSHookFunctionServiceRoleDefaultPolicy58C09FA8",
+    "Roles": [
+     {
+      "Ref": "TranscendenceClusterDefaultAutoScalingGroupDrainECSHookFunctionServiceRole2978D9A7"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup/DrainECSHook/Function/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "TranscendenceClusterDefaultAutoScalingGroupDrainECSHookFunction400F84E8": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "ZipFile": "import boto3, json, os, time\n\necs = boto3.client('ecs')\nautoscaling = boto3.client('autoscaling')\n\n\ndef lambda_handler(event, context):\n  print(json.dumps(dict(event, ResponseURL='...')))\n  cluster = os.environ['CLUSTER']\n  snsTopicArn = event['Records'][0]['Sns']['TopicArn']\n  lifecycle_event = json.loads(event['Records'][0]['Sns']['Message'])\n  instance_id = lifecycle_event.get('EC2InstanceId')\n  if not instance_id:\n    print('Got event without EC2InstanceId: %s', json.dumps(dict(event, ResponseURL='...')))\n    return\n\n  instance_arn = container_instance_arn(cluster, instance_id)\n  print('Instance %s has container instance ARN %s' % (lifecycle_event['EC2InstanceId'], instance_arn))\n\n  if not instance_arn:\n    return\n\n  task_arns = container_instance_task_arns(cluster, instance_arn)\n\n  if task_arns:\n    print('Instance ARN %s has task ARNs %s' % (instance_arn, ', '.join(task_arns)))\n\n  while has_tasks(cluster, instance_arn, task_arns):\n    time.sleep(10)\n\n  try:\n    print('Terminating instance %s' % instance_id)\n    autoscaling.complete_lifecycle_action(\n        LifecycleActionResult='CONTINUE',\n        **pick(lifecycle_event, 'LifecycleHookName', 'LifecycleActionToken', 'AutoScalingGroupName'))\n  except Exception as e:\n    # Lifecycle action may have already completed.\n    print(str(e))\n\n\ndef container_instance_arn(cluster, instance_id):\n  \"\"\"Turn an instance ID into a container instance ARN.\"\"\"\n  arns = ecs.list_container_instances(cluster=cluster, filter='ec2InstanceId==' + instance_id)['containerInstanceArns']\n  if not arns:\n    return None\n  return arns[0]\n\ndef container_instance_task_arns(cluster, instance_arn):\n  \"\"\"Fetch tasks for a container instance ARN.\"\"\"\n  arns = ecs.list_tasks(cluster=cluster, containerInstance=instance_arn)['taskArns']\n  return arns\n\ndef has_tasks(cluster, instance_arn, task_arns):\n  \"\"\"Return True if the instance is running tasks for the given cluster.\"\"\"\n  instances = ecs.describe_container_instances(cluster=cluster, containerInstances=[instance_arn])['containerInstances']\n  if not instances:\n    return False\n  instance = instances[0]\n\n  if instance['status'] == 'ACTIVE':\n    # Start draining, then try again later\n    set_container_instance_to_draining(cluster, instance_arn)\n    return True\n\n  task_count = None\n\n  if task_arns:\n    # Fetch details for tasks running on the container instance\n    tasks = ecs.describe_tasks(cluster=cluster, tasks=task_arns)['tasks']\n    if tasks:\n      # Consider any non-stopped tasks as running\n      task_count = sum(task['lastStatus'] != 'STOPPED' for task in tasks) + instance['pendingTasksCount']\n\n  if not task_count:\n    # Fallback to instance task counts if detailed task information is unavailable\n    task_count = instance['runningTasksCount'] + instance['pendingTasksCount']\n\n  print('Instance %s has %s tasks' % (instance_arn, task_count))\n\n  return task_count > 0\n\ndef set_container_instance_to_draining(cluster, instance_arn):\n  ecs.update_container_instances_state(\n      cluster=cluster,\n      containerInstances=[instance_arn], status='DRAINING')\n\n\ndef pick(dct, *keys):\n  \"\"\"Pick a subset of a dict.\"\"\"\n  return {k: v for k, v in dct.items() if k in keys}\n"
+    },
+    "Environment": {
+     "Variables": {
+      "CLUSTER": {
+       "Ref": "TranscendenceClusterC99018D3"
+      }
+     }
+    },
+    "Handler": "index.lambda_handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "TranscendenceClusterDefaultAutoScalingGroupDrainECSHookFunctionServiceRole2978D9A7",
+      "Arn"
+     ]
+    },
+    "Runtime": "python3.9",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup"
+     }
+    ],
+    "Timeout": 310
+   },
+   "DependsOn": [
+    "TranscendenceClusterDefaultAutoScalingGroupDrainECSHookFunctionServiceRoleDefaultPolicy58C09FA8",
+    "TranscendenceClusterDefaultAutoScalingGroupDrainECSHookFunctionServiceRole2978D9A7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup/DrainECSHook/Function/Resource"
+   }
+  },
+  "TranscendenceClusterDefaultAutoScalingGroupDrainECSHookFunctionLogGroupC7D6A7DD": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "LogGroupName": {
+     "Fn::Join": [
+      "",
+      [
+       "/aws/lambda/",
+       {
+        "Ref": "TranscendenceClusterDefaultAutoScalingGroupDrainECSHookFunction400F84E8"
+       }
+      ]
+     ]
+    },
+    "RetentionInDays": 731,
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup/DrainECSHook/Function/LogGroup/Resource"
+   }
+  },
+  "TranscendenceClusterDefaultAutoScalingGroupDrainECSHookFunctionAllowInvokeecsclusterstackTranscendenceClusterDefaultAutoScalingGroupLifecycleHookDrainHookTopicF7B6B58D698ABF58": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "TranscendenceClusterDefaultAutoScalingGroupDrainECSHookFunction400F84E8",
+      "Arn"
+     ]
+    },
+    "Principal": "sns.amazonaws.com",
+    "SourceArn": {
+     "Ref": "TranscendenceClusterDefaultAutoScalingGroupLifecycleHookDrainHookTopicE6C30837"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup/DrainECSHook/Function/AllowInvoke:ecsclusterstackTranscendenceClusterDefaultAutoScalingGroupLifecycleHookDrainHookTopicF7B6B58D"
+   }
+  },
+  "TranscendenceClusterDefaultAutoScalingGroupDrainECSHookFunctionTopic54D6D526": {
+   "Type": "AWS::SNS::Subscription",
+   "Properties": {
+    "Endpoint": {
+     "Fn::GetAtt": [
+      "TranscendenceClusterDefaultAutoScalingGroupDrainECSHookFunction400F84E8",
+      "Arn"
+     ]
+    },
+    "Protocol": "lambda",
+    "TopicArn": {
+     "Ref": "TranscendenceClusterDefaultAutoScalingGroupLifecycleHookDrainHookTopicE6C30837"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup/DrainECSHook/Function/Topic/Resource"
+   }
+  },
+  "TranscendenceClusterDefaultAutoScalingGroupLifecycleHookDrainHookTopicE6C30837": {
+   "Type": "AWS::SNS::Topic",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup/LifecycleHookDrainHook/Topic/Resource"
+   }
+  },
+  "TranscendenceClusterDefaultAutoScalingGroupLifecycleHookDrainHookRole2C98AD7C": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "autoscaling.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup/LifecycleHookDrainHook/Role/Resource"
+   }
+  },
+  "TranscendenceClusterDefaultAutoScalingGroupLifecycleHookDrainHookRoleDefaultPolicy27C313A3": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sns:Publish",
+       "Effect": "Allow",
+       "Resource": {
+        "Ref": "TranscendenceClusterDefaultAutoScalingGroupLifecycleHookDrainHookTopicE6C30837"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "TranscendenceClusterDefaultAutoScalingGroupLifecycleHookDrainHookRoleDefaultPolicy27C313A3",
+    "Roles": [
+     {
+      "Ref": "TranscendenceClusterDefaultAutoScalingGroupLifecycleHookDrainHookRole2C98AD7C"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup/LifecycleHookDrainHook/Role/DefaultPolicy/Resource"
+   }
+  },
+  "TranscendenceClusterDefaultAutoScalingGroupLifecycleHookDrainHookE145A7ED": {
+   "Type": "AWS::AutoScaling::LifecycleHook",
+   "Properties": {
+    "AutoScalingGroupName": {
+     "Ref": "TranscendenceClusterDefaultAutoScalingGroupASG1AC04912"
+    },
+    "DefaultResult": "CONTINUE",
+    "HeartbeatTimeout": 300,
+    "LifecycleTransition": "autoscaling:EC2_INSTANCE_TERMINATING",
+    "NotificationTargetARN": {
+     "Ref": "TranscendenceClusterDefaultAutoScalingGroupLifecycleHookDrainHookTopicE6C30837"
+    },
+    "RoleARN": {
+     "Fn::GetAtt": [
+      "TranscendenceClusterDefaultAutoScalingGroupLifecycleHookDrainHookRole2C98AD7C",
+      "Arn"
+     ]
+    }
+   },
+   "DependsOn": [
+    "TranscendenceClusterDefaultAutoScalingGroupLifecycleHookDrainHookRoleDefaultPolicy27C313A3",
+    "TranscendenceClusterDefaultAutoScalingGroupLifecycleHookDrainHookRole2C98AD7C"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack/TranscendenceCluster/DefaultAutoScalingGroup/LifecycleHookDrainHook/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/81WTW/jNhD9LctjwKhZb0++eb3erdHEcW0tejCCYEyN7akpUiCHSQ1B/72gviLHRVAssEhPomY4H+/xaahRMrr5Nbn5AM/+WmXHa03bpFwzqKOEZ/9YovJJOdXBM7pNKVSzWkCOYiyuhBRPhapXlSwFZNkUClDEJzHeRHcpcvj7xVZH5GReWZ4KtQ5bg+zFuBS+XqanIpZYhq0mJSopyHgGo7B1XInqoa05CWzXCjSZ/TdnQzGorQ5kcJ7Dvg27qR6qBzndmRZSJSGw9U1wUr7OtCl7fPIsW2sKRQbcdbTCQoPCeudPw9wg/u7RfQGGBmnHQ2pXVuPSalKR/7L6EUfNzmse5C3tUJ2Uxt+sPW5KAReU16B0ty11YDwxWSPGYkDxeDYdPc4X63SymM4e09nqbr6YpPPFNyFFhjsImlfog2YxFtP7RTpffJ8JKYxl2pGCmDAFt0duCx4QHG8ROKUcbeBWGBHDWcuVRDVKyjWq4IhPl4cLWtvnidb3gbc2mEyM2QVsMp1FyVsIRh1SzAsNjJvy33RxcW4RHQNpzO6sIbaOzF6Md6A9SuGH+Ttl9SfctOe9VQSMjTbmxSTLHHrfun1h+b6I7HSWrbbq+AWfSKF/1dTS2R3prq8jnpZAbkjcGcBKEuRJGXWyKYWzGgcfP3gfcsw+n6KGC0dGUQF6opQNhs/2xPiJagVxJapegMsu6kKezKAOc6PJvCi0V/ubzrfzvu39YUTxszewx6xOSZH2WhwvttPEmfPJ9f+D/y7U/TQ2aj3HarKxt/dCE9AMv4s8l+YsWzMw5mjYn5Hxn83vVPZ9mqxJb/iOq/n52KmkhnybQVJ+DabWQPytsFk3Ug5gMo2ufXPBMPXjhgdDXgo0T+SsiaWHd+NsaK4P/EUKXcm6Q3Q5eU/WVFLbvU/KW9vf+rpd9rOuHY2tuZLe+KRch61XjooWBduCVN9cVljqdV84y1ZZLcaigS+k2JFmdJ1g621D05/Ehzv0Hvb42WbdDof77rOJdwpkt8iM7o+AYdjosDOZxr7qWRR/eX7H02Bj7asquUJvg1PYEVaTVtMEDnJkdPHlPnARuJLLEx+s+eVT8nGUfPrwlye6bk8qWTXPfwCNZDW8WAoAAA=="
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Parameters": {
+  "SsmParameterValueawsserviceecsoptimizedamiamazonlinux2recommendedimageidC96584B6F00A464EAD1953AFF4B05118Parameter": {
+   "Type": "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>",
+   "Default": "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id"
+  },
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Outputs": {
+  "ClusterName": {
+   "Value": {
+    "Ref": "TranscendenceClusterC99018D3"
+   }
+  },
+  "ExportsOutputRefTranscendenceClusterC99018D32A383028": {
+   "Value": {
+    "Ref": "TranscendenceClusterC99018D3"
+   },
+   "Export": {
+    "Name": "ecs-cluster-stack:ExportsOutputRefTranscendenceClusterC99018D32A383028"
+   }
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}
