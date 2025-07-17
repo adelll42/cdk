@@ -3,6 +3,7 @@ from aws_cdk import (
     aws_ecs as ecs,
     aws_ec2 as ec2,
     aws_ecr as ecr,
+    aws_secretsmanager as secretsmanager,
     aws_logs as logs
 )
 from constructs import Construct
@@ -24,13 +25,19 @@ class ECSServicesStack(Stack):
         self.backend_service = self._create_service("backend", cluster, container_port=3000)
         self.frontend_service = self._create_service("frontend", cluster, container_port=80)
 
+
     def _create_service(
             self, 
             name: str, 
             cluster: ecs.Cluster, 
             container_port: int
             ) -> ecs.Ec2Service:
-        
+                
+        secret = secretsmanager.Secret.from_secret_name_v2(
+            self, f"{name.capitalize()}JWTBundle", "JWT_EXPIRES_IN/JWT_SECRET/DEFAULT_AVATAR"
+        )
+
+
         repo = ecr.Repository.from_repository_name(self, f"{name.capitalize()}Repo", name)
 
         log_group = logs.LogGroup(self, f"{name.capitalize()}LogGroup")
@@ -40,6 +47,11 @@ class ECSServicesStack(Stack):
         container = task_def.add_container(
             f"{name.capitalize()}Container",
             image=ecs.ContainerImage.from_ecr_repository(repo, tag="latest"),
+            secrets = {
+                "JWT_SECRET": ecs.Secret.from_secrets_manager(secret, field="JWT_SECRET"),
+                "JWT_EXPIRES_IN": ecs.Secret.from_secrets_manager(secret, field="JWT_EXPIRES_IN"),
+                "DEFAULT_AVATAR": ecs.Secret.from_secrets_manager(secret, field="DEFAULT_AVATAR")
+            },
             memory_reservation_mib=256,
             cpu=256,
             essential=True,

@@ -332,6 +332,14 @@
    "Export": {
     "Name": "alb-stack:ExportsOutputFnGetAttAppALBDBE7026ADNSNameA085A48D"
    }
+  },
+  "ExportsOutputRefAppALBDBE7026AA115F41B": {
+   "Value": {
+    "Ref": "AppALBDBE7026A"
+   },
+   "Export": {
+    "Name": "alb-stack:ExportsOutputRefAppALBDBE7026AA115F41B"
+   }
   }
  },
  "Parameters": {

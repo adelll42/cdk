@@ -68,6 +68,20 @@
         "HostPort": 0,
         "Protocol": "tcp"
        }
+      ],
+      "Secrets": [
+       {
+        "Name": "JWT_SECRET",
+        "ValueFrom": "arn:aws:secretsmanager:eu-west-2:577638398727:secret:JWT_EXPIRES_IN/JWT_SECRET/DEFAULT_AVATAR:JWT_SECRET::"
+       },
+       {
+        "Name": "JWT_EXPIRES_IN",
+        "ValueFrom": "arn:aws:secretsmanager:eu-west-2:577638398727:secret:JWT_EXPIRES_IN/JWT_SECRET/DEFAULT_AVATAR:JWT_EXPIRES_IN::"
+       },
+       {
+        "Name": "DEFAULT_AVATAR",
+        "ValueFrom": "arn:aws:secretsmanager:eu-west-2:577638398727:secret:JWT_EXPIRES_IN/JWT_SECRET/DEFAULT_AVATAR:DEFAULT_AVATAR::"
+       }
       ]
      }
     ],
@@ -144,6 +158,14 @@
          "Arn"
         ]
        }
+      },
+      {
+       "Action": [
+        "secretsmanager:DescribeSecret",
+        "secretsmanager:GetSecretValue"
+       ],
+       "Effect": "Allow",
+       "Resource": "arn:aws:secretsmanager:eu-west-2:577638398727:secret:JWT_EXPIRES_IN/JWT_SECRET/DEFAULT_AVATAR-??????"
       }
      ],
      "Version": "2012-10-17"
@@ -304,6 +326,20 @@
         "HostPort": 0,
         "Protocol": "tcp"
        }
+      ],
+      "Secrets": [
+       {
+        "Name": "JWT_SECRET",
+        "ValueFrom": "arn:aws:secretsmanager:eu-west-2:577638398727:secret:JWT_EXPIRES_IN/JWT_SECRET/DEFAULT_AVATAR:JWT_SECRET::"
+       },
+       {
+        "Name": "JWT_EXPIRES_IN",
+        "ValueFrom": "arn:aws:secretsmanager:eu-west-2:577638398727:secret:JWT_EXPIRES_IN/JWT_SECRET/DEFAULT_AVATAR:JWT_EXPIRES_IN::"
+       },
+       {
+        "Name": "DEFAULT_AVATAR",
+        "ValueFrom": "arn:aws:secretsmanager:eu-west-2:577638398727:secret:JWT_EXPIRES_IN/JWT_SECRET/DEFAULT_AVATAR:DEFAULT_AVATAR::"
+       }
       ]
      }
     ],
@@ -380,6 +416,14 @@
          "Arn"
         ]
        }
+      },
+      {
+       "Action": [
+        "secretsmanager:DescribeSecret",
+        "secretsmanager:GetSecretValue"
+       ],
+       "Effect": "Allow",
+       "Resource": "arn:aws:secretsmanager:eu-west-2:577638398727:secret:JWT_EXPIRES_IN/JWT_SECRET/DEFAULT_AVATAR-??????"
       }
      ],
      "Version": "2012-10-17"
@@ -482,7 +526,7 @@
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/+1UwU4CMRD9FnokpeLiiRsgMSTGkIXbhpjaHWBkt920Xcmm6b+b7bJGQFHjwYuHpul7M+/NNJ1GLOrfsH6H701PpLtehk/MLSwXO8r35tGB0CyGQhm0SldjbiBZ0UxtDHP3anOnVVkkpEso6ZIVnaxlC3oKwjA3FdGSm90trFGiRSXb4J+sIHwsQydKWo4S9DtsKqIF6BcUcOoSFA6cp8hz5mKVQeIIN6bMIR1XZOhIoVEKLHg2EkKV0pJhyG9i6oSRqI0C7D39TTYlWmXwwHM4nB3habpU81ZkrjIUFRkmzq8Cay0X25nMUMIbV7f2NXlZ9zL7fz2fsuFR1YXTBg6PrjVbqpo5q+EcTtOF5RZykNYc2X4b/hvb0H3TeD3rEXNhxESp0VbhC5jJjQZj6Ck+DbD3NAajSv3BtHo6r+xWyasBu47YoPNsEHu6lBZzYHGzvwLgSRgHuQQAAA=="
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/+1UTWsCMRD9LeZYYmrXnryplSKUIqu3RUqaHXXqbrIk2coS8t/LZlX8oj0IlUIPQ8h7mXmZGWYiFnUeWafFN6Yt0nU7w3fmppaLNY3BqFILSMgdoQc2p3xj3hwIzWIolEGrdDXgBpI5zdTSMPeils9alUWy9xgu5A70FIRhbiSiGTfrJ1igRItKnspcY0HwODwdKmk5StAH2EhEU9CfeCnJ4UJuOU+R58zFKoPEEW5MmUM6qEjPkUKjFFjwrC+EKqUlveDfvKkd+qIWCrD39BpvSrTK4JXnsL07wtN0pia7IBOVoahIL3F+HlhruViNZYYS9lyd2s/k93Fvxf4X/gZsGIS6JLSBw6Ds0pipmjnL7hxO06nlFnKQ1hzJ/i78h/8e+tC0oN6gEXNhQYlSo63CYh3LpQZj6Ck+CrD3nk4qu1LyvsseItZtfRjEti6lxRxY3Jxf4XKMJw8GAAA="
    },
    "Metadata": {
     "aws:cdk:path": "ecs-services-stack/CDKMetadata/Default"

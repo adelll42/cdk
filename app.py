@@ -14,6 +14,7 @@ from stacks.ecs_stack import ECSClusterStack
 from stacks.alb_stack import ALBStack
 from stacks.ACM_stack import ACMStack
 from stacks.route53_stack import Route53Stack
+from stacks.waf_stack import WAFStack
 
 
 app = cdk.App()
@@ -104,5 +105,13 @@ route53_stack = Route53Stack(
     alb=alb_stack.alb,
     env=env
 )
+
+waf_stack = WAFStack(
+    app,
+    "waf-stack",
+    alb=alb_stack.alb,
+    env=env
+)
+
 
 app.synth()
