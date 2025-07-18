@@ -4,7 +4,6 @@ from aws_cdk import Environment
 from aws_cdk import aws_secretsmanager as secretsmanager
 from aws_cdk import aws_route53 as route53
 import boto3
-from aws_cdk import Stack
 from aws_cdk import aws_ec2 as ec2
 
 from stacks.vpc_stack import VpcStack
@@ -59,59 +58,29 @@ ecs_services_stack = ECSServicesStack(
     env=env
     )
 
-# services = {
-#     "frontend": frontend_service,
-#     "backend": backend_service
-# }
+GenericPipelineStack(
+    app, 
+    "pipeline-stack",
+    env=env
+)
 
-# GenericPipelineStack(app, "PipelineStack",
-#     vpc=vpc,
-#     cluster=cluster,
-#     services=services,
-#     env=env
-# )
+acm_stack = ACMStack(
+    app,
+    "acm-stack",
+    env=env
+)
 
-# backend_pipeline_stack = BackendPipelineStack(
-#     app,
-#     "backend-pipeline-stack",
-#     vpc=vpc_stack.vpc,
-#     cluster=ecs_stack.cluster,
-#     service=ecs_services_stack.backend_service,
-#     env=env
-# )
+alb_stack = ALBStack(
+    app,
+    "alb-stack",
+    env=env
+)
 
-# frontend_pipeline_stack = FrontendPipelineStack(
-#     app,
-#     "frontend-pipeline",
-#     vpc=vpc_stack.vpc,
-#     cluster=ecs_stack.cluster,
-#     service=ecs_services_stack.frontend_service,
-#     env=env
-# )
-
-# acm_stack = ACMStack(
-#     app,
-#     "acm-stack",
-#     domain_name="transendence.dev.yospace.ai",
-#     env=env
-# )
-
-# alb_stack = ALBStack(
-#     app,
-#     "alb-stack",
-#     vpc=vpc_stack.vpc,
-#     frontend_service=ecs_services_stack.frontend_service,
-#     backend_service=ecs_services_stack.backend_service,
-#     certificate=acm_stack.certificate,
-#     env=env
-# )
-
-# route53_stack = Route53Stack(
-#     app,
-#     "route53-stack",
-#     alb=alb_stack.alb,
-#     env=env
-# )
+route53_stack = Route53Stack(
+    app,
+    "route53-stack",
+    env=env
+)
 
 # waf_stack = WAFStack(
 #     app,

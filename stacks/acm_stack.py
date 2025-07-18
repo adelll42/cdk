@@ -18,7 +18,7 @@ class ACMStack(Stack):
         ):
         super().__init__(scope, id, **kwargs)
 
-        config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'acm.yml')
+        config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'acm', 'acm.yml')
         with open(config_path, 'r') as f:
             config = yaml.safe_load(f)
 

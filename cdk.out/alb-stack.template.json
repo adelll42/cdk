@@ -1,4 +1,23 @@
 {
+ "Parameters": {
+  "ImportedCertParamParameter": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/transendence/certificates/dev-cert/arn"
+  },
+  "SsmParameterValuetransendenceecsservicesbackendservicenameC96584B6F00A464EAD1953AFF4B05118Parameter": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/transendence/ecs/services/backend/service_name"
+  },
+  "SsmParameterValuetransendenceecsservicesfrontendservicenameC96584B6F00A464EAD1953AFF4B05118Parameter": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/transendence/ecs/services/frontend/service_name"
+  },
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
  "Resources": {
   "AppALBDBE7026A": {
    "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
@@ -19,12 +38,8 @@
      }
     ],
     "Subnets": [
-     {
-      "Fn::ImportValue": "vpc:ExportsOutputReftransendenceVPCPublicSubnet1Subnet571CA78A57315E29"
-     },
-     {
-      "Fn::ImportValue": "vpc:ExportsOutputReftransendenceVPCPublicSubnet2Subnet630FF9A89505A940"
-     }
+     "subnet-0197d3ca7498ff828",
+     "subnet-06e45a7caf458f59b"
     ],
     "Type": "application"
    },
@@ -36,6 +51,15 @@
    "Type": "AWS::EC2::SecurityGroup",
    "Properties": {
     "GroupDescription": "Automatically created Security Group for ELB albstackAppALB26CED350",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "255.255.255.255/32",
+      "Description": "Disallow all traffic",
+      "FromPort": 252,
+      "IpProtocol": "icmp",
+      "ToPort": 86
+     }
+    ],
     "SecurityGroupIngress": [
      {
       "CidrIp": "0.0.0.0/0",
@@ -52,15 +76,13 @@
       "ToPort": 443
      }
     ],
-    "VpcId": {
-     "Fn::ImportValue": "vpc:ExportsOutputReftransendenceVPCE5114C9175EDFA28"
-    }
+    "VpcId": "vpc-04eca5ddbfd06fabc"
    },
    "Metadata": {
     "aws:cdk:path": "alb-stack/AppALB/SecurityGroup/Resource"
    }
   },
-  "AppALBHttpRedirectCC71691B": {
+  "AppALBHttpRedirectListener9C9F211E": {
    "Type": "AWS::ElasticLoadBalancingV2::Listener",
    "Properties": {
     "DefaultActions": [
@@ -80,7 +102,7 @@
     "Protocol": "HTTP"
    },
    "Metadata": {
-    "aws:cdk:path": "alb-stack/AppALB/HttpRedirect/Resource"
+    "aws:cdk:path": "alb-stack/AppALB/HttpRedirectListener/Resource"
    }
   },
   "AppALBHttpsListener75ADFE18": {
@@ -89,14 +111,14 @@
     "Certificates": [
      {
       "CertificateArn": {
-       "Fn::ImportValue": "acm-stack:ExportsOutputRefSSLCertificate2E93C5653F34B868"
+       "Ref": "ImportedCertParamParameter"
       }
      }
     ],
     "DefaultActions": [
      {
       "TargetGroupArn": {
-       "Ref": "DefaultFrontendTG22676E6D"
+       "Ref": "FrontendTGE1AACCED"
       },
       "Type": "forward"
      }
@@ -111,13 +133,13 @@
     "aws:cdk:path": "alb-stack/AppALB/HttpsListener/Resource"
    }
   },
-  "AppALBHttpsListenerBackendApiRuleRule57A84262": {
+  "AppALBHttpsListenerApiRouteRule0FE74FD9": {
    "Type": "AWS::ElasticLoadBalancingV2::ListenerRule",
    "Properties": {
     "Actions": [
      {
       "TargetGroupArn": {
-       "Ref": "BackendTargetGroupECF98930"
+       "Ref": "BackendTG79530091"
       },
       "Type": "forward"
      }
@@ -138,16 +160,16 @@
     "Priority": 1
    },
    "Metadata": {
-    "aws:cdk:path": "alb-stack/AppALB/HttpsListener/BackendApiRuleRule/Resource"
+    "aws:cdk:path": "alb-stack/AppALB/HttpsListener/ApiRouteRule/Resource"
    }
   },
-  "AppALBHttpsListenerBackendAvatarsRuleRule0814D634": {
+  "AppALBHttpsListenerAvatarsRouteRule439EAC1B": {
    "Type": "AWS::ElasticLoadBalancingV2::ListenerRule",
    "Properties": {
     "Actions": [
      {
       "TargetGroupArn": {
-       "Ref": "BackendTargetGroupECF98930"
+       "Ref": "BackendTG79530091"
       },
       "Type": "forward"
      }
@@ -168,16 +190,16 @@
     "Priority": 2
    },
    "Metadata": {
-    "aws:cdk:path": "alb-stack/AppALB/HttpsListener/BackendAvatarsRuleRule/Resource"
+    "aws:cdk:path": "alb-stack/AppALB/HttpsListener/AvatarsRouteRule/Resource"
    }
   },
-  "AppALBHttpsListenerFrontendDefaultRuleRule13ADB3F7": {
+  "AppALBHttpsListenerDefaultRouteRule150D01D1": {
    "Type": "AWS::ElasticLoadBalancingV2::ListenerRule",
    "Properties": {
     "Actions": [
      {
       "TargetGroupArn": {
-       "Ref": "FrontendTargetGroupED7B3E5D"
+       "Ref": "FrontendTGE1AACCED"
       },
       "Type": "forward"
      }
@@ -198,12 +220,16 @@
     "Priority": 10
    },
    "Metadata": {
-    "aws:cdk:path": "alb-stack/AppALB/HttpsListener/FrontendDefaultRuleRule/Resource"
+    "aws:cdk:path": "alb-stack/AppALB/HttpsListener/DefaultRouteRule/Resource"
    }
   },
-  "DefaultFrontendTG22676E6D": {
+  "FrontendTGE1AACCED": {
    "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
    "Properties": {
+    "HealthCheckPath": "/",
+    "Matcher": {
+     "HttpCode": "200"
+    },
     "Port": 80,
     "Protocol": "HTTP",
     "TargetGroupAttributes": [
@@ -212,16 +238,14 @@
       "Value": "false"
      }
     ],
-    "TargetType": "instance",
-    "VpcId": {
-     "Fn::ImportValue": "vpc:ExportsOutputReftransendenceVPCE5114C9175EDFA28"
-    }
+    "TargetType": "ip",
+    "VpcId": "vpc-04eca5ddbfd06fabc"
    },
    "Metadata": {
-    "aws:cdk:path": "alb-stack/DefaultFrontendTG/Resource"
+    "aws:cdk:path": "alb-stack/FrontendTG/Resource"
    }
   },
-  "BackendTargetGroupECF98930": {
+  "BackendTG79530091": {
    "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
    "Properties": {
     "HealthCheckPath": "/api/health",
@@ -236,117 +260,21 @@
       "Value": "false"
      }
     ],
-    "TargetType": "instance",
-    "VpcId": {
-     "Fn::ImportValue": "vpc:ExportsOutputReftransendenceVPCE5114C9175EDFA28"
-    }
+    "TargetType": "ip",
+    "VpcId": "vpc-04eca5ddbfd06fabc"
    },
    "Metadata": {
-    "aws:cdk:path": "alb-stack/BackendTargetGroup/Resource"
-   }
-  },
-  "FrontendTargetGroupED7B3E5D": {
-   "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
-   "Properties": {
-    "Port": 80,
-    "Protocol": "HTTP",
-    "TargetGroupAttributes": [
-     {
-      "Key": "stickiness.enabled",
-      "Value": "false"
-     }
-    ],
-    "TargetType": "instance",
-    "VpcId": {
-     "Fn::ImportValue": "vpc:ExportsOutputReftransendenceVPCE5114C9175EDFA28"
-    }
-   },
-   "Metadata": {
-    "aws:cdk:path": "alb-stack/FrontendTargetGroup/Resource"
+    "aws:cdk:path": "alb-stack/BackendTG/Resource"
    }
   },
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/82RTUsDMRCGf0tzlGysW0+9VRFZEJTWWykyTaZrbJys+WgpIf9dNt3DFsSLFw9DmHfeeWbC1KKe3orpBI6+kmpfGb0VaRVA7jkc/VtCAz5oaSyoLRggqak91CItus5oCUFberKg7koN3ZpdMT7Eht/vLop83KR9QLps+C3OsKHpJ9AyGhx7Sj7yvYJrMTw6G7veNkozR1mLtEIZnQ6noq0TO3SSzct0hV463fWUQQFj7HFhzHMMWxtJsfkOjMfMEwOlGmodet9vwObrxCRQQ0YTnpXgInImLRHKnukHaCT9FbFRJc085fL3At4M5IcxuK8Oph65+RfT/+4pl744Rs6Zv5zCu6XrmbipxWzy4bWuXKSgP1Esz+83FS30YMoCAAA="
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/7WQT08CMRDFPws9mm7F5cYNPRgSEwl42xAztANWynTtHzak6Xc3WzBZlKuHpnlv3vw601rU41qMR9D5Sqp9ZfRGpFUAuedL9DY6iQ27Y/zGWfOnLS3AwQEDOg6df09owActjQW1AQMkNe2OtUiztjVaQtCWXiyox1JD1/zGDYt82KR9QLpu+DPLT+hW4zIaHGaKHuTewO0wPDsb2z42kJmjrEVaoYxOh1PxmsSOrWTT8rpCL51ue8rFAWNsNzPmNYaNjaTYdAvGY+aJgVJz2jn0vp+ATZvEJNCcjCY8O8FF5ExaIpQ901+gkfRXxLkqMvOUy+4FvP5HcvnZq+VzznxxCh+W7ifioRaT0afXunKRgj6gWJ7vb2zD0tVZAgAA"
    },
    "Metadata": {
     "aws:cdk:path": "alb-stack/CDKMetadata/Default"
    }
-  }
- },
- "Outputs": {
-  "ExportsOutputRefBackendTargetGroupECF989302A4524FE": {
-   "Value": {
-    "Ref": "BackendTargetGroupECF98930"
-   },
-   "Export": {
-    "Name": "alb-stack:ExportsOutputRefBackendTargetGroupECF989302A4524FE"
-   }
-  },
-  "ExportsOutputFnGetAttAppALBSecurityGroup30809A2CGroupId7BC01C01": {
-   "Value": {
-    "Fn::GetAtt": [
-     "AppALBSecurityGroup30809A2C",
-     "GroupId"
-    ]
-   },
-   "Export": {
-    "Name": "alb-stack:ExportsOutputFnGetAttAppALBSecurityGroup30809A2CGroupId7BC01C01"
-   }
-  },
-  "ExportsOutputRefDefaultFrontendTG22676E6D3F6AADA6": {
-   "Value": {
-    "Ref": "DefaultFrontendTG22676E6D"
-   },
-   "Export": {
-    "Name": "alb-stack:ExportsOutputRefDefaultFrontendTG22676E6D3F6AADA6"
-   }
-  },
-  "ExportsOutputRefFrontendTargetGroupED7B3E5DC932CE91": {
-   "Value": {
-    "Ref": "FrontendTargetGroupED7B3E5D"
-   },
-   "Export": {
-    "Name": "alb-stack:ExportsOutputRefFrontendTargetGroupED7B3E5DC932CE91"
-   }
-  },
-  "ExportsOutputFnGetAttAppALBDBE7026ACanonicalHostedZoneIDCF79ADAC": {
-   "Value": {
-    "Fn::GetAtt": [
-     "AppALBDBE7026A",
-     "CanonicalHostedZoneID"
-    ]
-   },
-   "Export": {
-    "Name": "alb-stack:ExportsOutputFnGetAttAppALBDBE7026ACanonicalHostedZoneIDCF79ADAC"
-   }
-  },
-  "ExportsOutputFnGetAttAppALBDBE7026ADNSNameA085A48D": {
-   "Value": {
-    "Fn::GetAtt": [
-     "AppALBDBE7026A",
-     "DNSName"
-    ]
-   },
-   "Export": {
-    "Name": "alb-stack:ExportsOutputFnGetAttAppALBDBE7026ADNSNameA085A48D"
-   }
-  },
-  "ExportsOutputRefAppALBDBE7026AA115F41B": {
-   "Value": {
-    "Ref": "AppALBDBE7026A"
-   },
-   "Export": {
-    "Name": "alb-stack:ExportsOutputRefAppALBDBE7026AA115F41B"
-   }
-  }
- },
- "Parameters": {
-  "BootstrapVersion": {
-   "Type": "AWS::SSM::Parameter::Value<String>",
-   "Default": "/cdk-bootstrap/hnb659fds/version",
-   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
   }
  },
  "Rules": {

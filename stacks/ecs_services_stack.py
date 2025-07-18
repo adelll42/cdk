@@ -7,7 +7,8 @@ from aws_cdk import (
     aws_ecr as ecr,
     aws_secretsmanager as secretsmanager,
     aws_logs as logs,
-    aws_iam as iam
+    aws_iam as iam,
+    aws_ssm as ssm
 )
 from constructs import Construct
 from aws_cdk.aws_ecs import LogDrivers
@@ -57,9 +58,15 @@ class ECSServicesStack(Stack):
 
     def _create_service(self, name, repo_name, port, secret_fields, cluster, task_role):
         secret = secretsmanager.Secret.from_secret_name_v2(
-            self, f"{name.capitalize()}Secrets",
-            "JWT_EXPIRES_IN/JWT_SECRET/DEFAULT_AVATAR"
+            self, f"{name}Secret", "JWT_EXPIRES_IN/JWT_SECRET/DEFAULT_AVATAR"
         )
+        container_secrets = {}
+        container_secrets = {
+            key: ecs.Secret.from_secrets_manager(secret, field=key)
+            for key in ["JWT_EXPIRES_IN", "JWT_SECRET", "DEFAULT_AVATAR", "DATABASE_URL"]
+        }
+
+
 
         repo = ecr.Repository.from_repository_name(
             self, f"{name.capitalize()}Repo", repo_name
@@ -75,10 +82,7 @@ class ECSServicesStack(Stack):
         container = task_def.add_container(
             f"{name.capitalize()}Container",
             image=ecs.ContainerImage.from_ecr_repository(repo, tag="latest"),
-            secrets={
-                key: ecs.Secret.from_secrets_manager(secret, field=field)
-                for key, field in secret_fields.items()
-            },
+            secrets=container_secrets,
             memory_reservation_mib=256,
             cpu=256,
             essential=True,
@@ -87,6 +91,7 @@ class ECSServicesStack(Stack):
                 log_group=log_group
             )
         )
+
 
         container.add_port_mappings(
             ecs.PortMapping(container_port=port)
@@ -97,4 +102,10 @@ class ECSServicesStack(Stack):
             cluster=cluster,
             task_definition=task_def,
             desired_count=1
+        )
+
+        ssm.StringParameter(
+            self, f"{name.capitalize()}ServiceSSMParam",
+            parameter_name=f"/transendence/ecs/services/{name}/service_name",
+            string_value=name
         )

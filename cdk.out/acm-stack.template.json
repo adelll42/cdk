@@ -1,44 +1,47 @@
 {
  "Resources": {
-  "SSLCertificate2E93C565": {
+  "devcertCertificate5874DCAD": {
    "Type": "AWS::CertificateManager::Certificate",
    "Properties": {
-    "DomainName": "transendence.dev.yospace.ai",
+    "DomainName": "dev.yospace.ai",
     "DomainValidationOptions": [
      {
-      "DomainName": "transendence.dev.yospace.ai",
+      "DomainName": "dev.yospace.ai",
       "HostedZoneId": "Z05665242V72OKDJR354Z"
      }
     ],
     "Tags": [
      {
       "Key": "Name",
-      "Value": "acm-stack/SSLCertificate"
+      "Value": "acm-stack/dev-cert-Certificate"
      }
     ],
     "ValidationMethod": "DNS"
    },
    "Metadata": {
-    "aws:cdk:path": "acm-stack/SSLCertificate/Resource"
+    "aws:cdk:path": "acm-stack/dev-cert-Certificate/Resource"
+   }
+  },
+  "devcertCertArn18A1BA70": {
+   "Type": "AWS::SSM::Parameter",
+   "Properties": {
+    "Name": "/transendence/certificates/dev-cert/arn",
+    "Type": "String",
+    "Value": {
+     "Ref": "devcertCertificate5874DCAD"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "acm-stack/dev-cert-CertArn/Resource"
    }
   },
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/03LsQrCMBCA4WdpRknPmjq5dhepYylyplc92ySQpBYJeXdBB51++OBXoKo9VAWuodTDVM58hXSOqCfZUnCL19T1Etdw0eQjj6wxkkGLN/KQmp91SQzOINsjGhIHsRFSPHHmASM7+4Hcy2a0f0/O8vSKd2e3NewU1MUjMJd+sZENQfvtGxvfA96iAAAA"
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/02NwQ6CMBBEv4UeTakIN6/cDcHECyFmLQuu0GLaIjFN/92IUTnNZDLzJhVpkookgtnGsunjgS7CHx3Inpdox8lIrGoOsz17icZRSxIcKtDQoRE+/2eVZ82ogPQBFLI92zDOHjBQA45GvQSh5nmrV5vArVXvP0O6K8CAQoem8uz+9SuYXVonGCZc0X6rEAIvnu466m0mdqnIopslis2kHSkU5UdfpCnUIPAAAAA="
    },
    "Metadata": {
     "aws:cdk:path": "acm-stack/CDKMetadata/Default"
-   }
-  }
- },
- "Outputs": {
-  "ExportsOutputRefSSLCertificate2E93C5653F34B868": {
-   "Value": {
-    "Ref": "SSLCertificate2E93C565"
-   },
-   "Export": {
-    "Name": "acm-stack:ExportsOutputRefSSLCertificate2E93C5653F34B868"
    }
   }
  },

@@ -51,16 +51,20 @@
       ],
       "Secrets": [
        {
-        "Name": "JWT_SECRET",
-        "ValueFrom": "arn:aws:secretsmanager:eu-west-2:577638398727:secret:JWT_EXPIRES_IN/JWT_SECRET/DEFAULT_AVATAR:JWT_SECRET::"
-       },
-       {
         "Name": "JWT_EXPIRES_IN",
         "ValueFrom": "arn:aws:secretsmanager:eu-west-2:577638398727:secret:JWT_EXPIRES_IN/JWT_SECRET/DEFAULT_AVATAR:JWT_EXPIRES_IN::"
        },
        {
+        "Name": "JWT_SECRET",
+        "ValueFrom": "arn:aws:secretsmanager:eu-west-2:577638398727:secret:JWT_EXPIRES_IN/JWT_SECRET/DEFAULT_AVATAR:JWT_SECRET::"
+       },
+       {
         "Name": "DEFAULT_AVATAR",
         "ValueFrom": "arn:aws:secretsmanager:eu-west-2:577638398727:secret:JWT_EXPIRES_IN/JWT_SECRET/DEFAULT_AVATAR:DEFAULT_AVATAR::"
+       },
+       {
+        "Name": "DATABASE_URL",
+        "ValueFrom": "arn:aws:secretsmanager:eu-west-2:577638398727:secret:JWT_EXPIRES_IN/JWT_SECRET/DEFAULT_AVATAR:DATABASE_URL::"
        }
       ]
      }
@@ -176,6 +180,17 @@
     "aws:cdk:path": "ecs-services-stack/BackendService/Service"
    }
   },
+  "BackendServiceSSMParam3B70CBC5": {
+   "Type": "AWS::SSM::Parameter",
+   "Properties": {
+    "Name": "/transendence/ecs/services/backend/service_name",
+    "Type": "String",
+    "Value": "backend"
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-services-stack/BackendServiceSSMParam/Resource"
+   }
+  },
   "FrontendLogGroupCE4F14E0": {
    "Type": "AWS::Logs::LogGroup",
    "Properties": {
@@ -223,6 +238,24 @@
         "ContainerPort": 80,
         "HostPort": 0,
         "Protocol": "tcp"
+       }
+      ],
+      "Secrets": [
+       {
+        "Name": "JWT_EXPIRES_IN",
+        "ValueFrom": "arn:aws:secretsmanager:eu-west-2:577638398727:secret:JWT_EXPIRES_IN/JWT_SECRET/DEFAULT_AVATAR:JWT_EXPIRES_IN::"
+       },
+       {
+        "Name": "JWT_SECRET",
+        "ValueFrom": "arn:aws:secretsmanager:eu-west-2:577638398727:secret:JWT_EXPIRES_IN/JWT_SECRET/DEFAULT_AVATAR:JWT_SECRET::"
+       },
+       {
+        "Name": "DEFAULT_AVATAR",
+        "ValueFrom": "arn:aws:secretsmanager:eu-west-2:577638398727:secret:JWT_EXPIRES_IN/JWT_SECRET/DEFAULT_AVATAR:DEFAULT_AVATAR::"
+       },
+       {
+        "Name": "DATABASE_URL",
+        "ValueFrom": "arn:aws:secretsmanager:eu-west-2:577638398727:secret:JWT_EXPIRES_IN/JWT_SECRET/DEFAULT_AVATAR:DATABASE_URL::"
        }
       ]
      }
@@ -295,6 +328,14 @@
          "Arn"
         ]
        }
+      },
+      {
+       "Action": [
+        "secretsmanager:DescribeSecret",
+        "secretsmanager:GetSecretValue"
+       ],
+       "Effect": "Allow",
+       "Resource": "arn:aws:secretsmanager:eu-west-2:577638398727:secret:JWT_EXPIRES_IN/JWT_SECRET/DEFAULT_AVATAR-??????"
       }
      ],
      "Version": "2012-10-17"
@@ -330,10 +371,21 @@
     "aws:cdk:path": "ecs-services-stack/FrontendService/Service"
    }
   },
+  "FrontendServiceSSMParam076D0B02": {
+   "Type": "AWS::SSM::Parameter",
+   "Properties": {
+    "Name": "/transendence/ecs/services/frontend/service_name",
+    "Type": "String",
+    "Value": "frontend"
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-services-stack/FrontendServiceSSMParam/Resource"
+   }
+  },
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/91S0WrCMBT9FvM4Yubqm2/qZAzGkOpbkZGlV71rm1uSdFJC/300VZkU5p4m7CGEnJN7zrmXG4loFInRQB7sUKXZMMd34VdOqozHYKkyChJ2x/iVs+HyYN88KCNiKMmiI1PPpIVkw3PaWeFfaPdkqCqTc8V8q09gw0FZ4RcqWkubPcIWNTok/RvrfpT5Vl/K8DlpJ1GD+YYtVLQC84n9BoPCkWs4ykL4mHJIPJPWVgWks5pNPCsNaoWlzKdKUaUdm4T67k9bMFWtUYAbzgzl8CoLOL49k2m6puVJZEk5qppNEt9sAuucVPtnnaOGM9eGu07+rHsr9l+PLqxMG5x3cFipk9maWqaXoQ+n6cpJBwVoZy9s/xa+TfYwwm56TdPwZe32pO/H4iES48GHRRyaSjssQMTd/QX1TX50uwQAAA=="
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/+1UUWvCMBD+LeZxxMzVN9/UyRiMUarspcjI0lNvpklJ0kkJ/e+jqXUTYfoykLGHkOT77u7LXS6JWDSI2KDHd7Yvsm1f4hvzc8fFliZgdWkEpOSG0DNjSfnOvnoQhiVQaItOm2rCLaRLKvXaMv+k1w9Gl0V68JiuVAfWFIRlfiaiBbfbe1ihQodaXSJ9yQhix6HpVCvHUYH5hs1ENAfzgadJhwh7rqbIc+YTLSH1hFtb5pBNKjLypDCoBBZcjoXQpXJkFPxbm8ZhLBqhANeUGC3hmeew33vCs2yh4y5IrCWKioxSXy8D6xwXm0clUcGBaw53nvw57nWy/4X9BTY0clMw2sKh0bskF7phTnI/hbNs7riDHJSzR7JXAf+9lMKttRdWU2vz5o82qNYxNzwHByb1pOjWh8anxAarFy7Lr6dwkV0r2FnWdU3jym20uh2yu4gNe+8WsW9K5TAHlrTzJ7EUndRMBgAA"
    },
    "Metadata": {
     "aws:cdk:path": "ecs-services-stack/CDKMetadata/Default"

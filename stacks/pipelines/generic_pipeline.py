@@ -13,40 +13,50 @@ from aws_cdk import (
     aws_ecs as ecs
 )
 from constructs import Construct
+from aws_cdk import aws_ssm as ssm
+from helpers.vpc_lookup import get_vpc_id
 
-
+####for stages is there a way to use one automation for all the stages?
 class GenericPipelineStack(Stack):
     def __init__(
             self, 
             scope: Construct, 
-            id: str, *, 
-            vpc: ec2.Vpc, 
-            cluster: ecs.Cluster, 
-            services: dict, 
+            id: str, 
             **kwargs
-            ):
-        
+        ):
         super().__init__(scope, id, **kwargs)
 
-        config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'pipelines.yml')
+        config_path = os.path.join(os.path.dirname(__file__), '..', '..', 'config', 'pipelines', 'pipelines.yml')
         with open(config_path, 'r') as f:
             config = yaml.safe_load(f)
 
-        for pipeline_def in config["pipelines"]:
-            name = pipeline_def["name"]
-            github = pipeline_def["github"]
-            ecr_repo_name = pipeline_def["ecr_repo"]
-            image_def_file = pipeline_def["image_definition_file"]
+        vpc_name = config["vpc"]["name"]
+        vpc_id = get_vpc_id(vpc_name)
+        vpc = ec2.Vpc.from_lookup(self, "VpcImported", vpc_id=vpc_id)
 
-            service = services.get(name)
-            if not service:
-                raise ValueError(f"ECS service not provided for {name}")
+        cluster_name = config["cluster"]["name"]
+
+        cluster = ecs.Cluster.from_cluster_attributes(
+            self, "ClusterImported",
+            cluster_name=cluster_name,
+            vpc=vpc
+        )
+
+        for pipeline_def in config["pipelines"]:
+            service_name = ssm.StringParameter.value_for_string_parameter(
+                self, pipeline_def["ecs_service_ssm_param"]
+            )
+            service = ecs.Ec2Service.from_ec2_service_attributes(
+                self, f"{pipeline_def['name'].capitalize()}ServiceImported",
+                cluster=cluster,
+                service_name=service_name
+            )
 
             self._create_pipeline(
-                name=name,
-                github=github,
-                ecr_repo_name=ecr_repo_name,
-                image_def_file=image_def_file,
+                name=pipeline_def["name"],
+                github=pipeline_def["github"],
+                ecr_repo_name=pipeline_def["ecr_repo"],
+                image_def_file=pipeline_def["image_definition_file"],
                 service=service
             )
 
