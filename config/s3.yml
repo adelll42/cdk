@@ -1,5 +1,5 @@
 bucket:
-  name: transcendence-app-assets
+  name: transendence-app-assets
   versioned: true
   encrypted: true
   destroy_on_remove: true

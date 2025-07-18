@@ -10,7 +10,13 @@ import yaml
 
 
 class S3Stack(Stack):
-    def __init__(self, scope: Construct, id: str, **kwargs) -> None:
+    def __init__(
+            self, 
+            scope: Construct, 
+            id: str, 
+            **kwargs
+        ):
+
         super().__init__(scope, id, **kwargs)
 
         config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 's3.yml')
@@ -37,7 +43,7 @@ class S3Stack(Stack):
             ))
 
         self.bucket = s3.Bucket(self,
-            "TranscendenceAppAssets",
+            "transendenceAppAssets",
             bucket_name=bucket_name,
             versioned=versioned,
             encryption=s3.BucketEncryption.S3_MANAGED if encrypted else None,

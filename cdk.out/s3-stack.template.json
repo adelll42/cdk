@@ -1,6 +1,6 @@
 {
  "Resources": {
-  "TranscendenceAppAssets133AF831": {
+  "transendenceAppAssetsF218E671": {
    "Type": "AWS::S3::Bucket",
    "Properties": {
     "BucketEncryption": {
@@ -12,7 +12,7 @@
       }
      ]
     },
-    "BucketName": "transcendence-app-assets",
+    "BucketName": "transendence-app-assets",
     "CorsConfiguration": {
      "CorsRules": [
       {
@@ -33,7 +33,7 @@
      "Rules": [
       {
        "ExpirationInDays": 30,
-       "Id": "AutoDeleteAfter30Days",
+       "Id": "AutoDeleteAfterXDays",
        "Status": "Enabled"
       }
      ]
@@ -51,13 +51,13 @@
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
    "Metadata": {
-    "aws:cdk:path": "s3-stack/TranscendenceAppAssets/Resource"
+    "aws:cdk:path": "s3-stack/transendenceAppAssets/Resource"
    }
   },
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/62RMW/CMBCFfws3IselpFO2lCI6FBoBnVCEHPso1zh2ZTtEUZT/XkGg7dSp00nf3XtPTzfl08kDn4xE4yOpykhTwbtNELJkovF7H/PusZYlhl0HhbayzOpCk0ylRO8hgTEwKC4HK1HhFUjrPCS7DoTWtkG1xHC06oxgMd8Cg+xtCzm7rV8dvZO5uV3hMwqFboB9zgCNdO1nIGsggU28X6ardDF/AgaaDihbqXFdaxxy0YhCo4IkuBoZkPq2cVjZk9CZ1SRbSEChD862wOCEzpM1N1XPOhBKzazzZ99/rcMumzHk15CX3w3+KvAjzNnsYIbP9D3L2nC05i7m91Mejz48UeRqE6hCvh7mFy3tEtLoAQAA"
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/62RMW/CMBCFfws3ootLky0bpYgOhUZAJxQhxz6KG8eubAcURfnvFYS0TJ06nfTdvff0dDGLJzGbjPjZR0KWkVYFazeBixL52e99wtqnWpQUdi0U2ooyqwutxFQI8h5SGANCcT1Y8YpuQFjnId21wLW2Z5JLCkcrLwgW8y0gZO9byHFYvzn1oczgdoMvxCW5HnY5Ahnhmq+grIEUNsl+OV1NF/NnQNDqQKIRmta1pj6XDC80SUiDqwlByR8bR5U9cZ1ZrUQDKUjywdkGEE7kvLJmUHXYApdyZp2/+P5rHbxuxpDfQl7vG/xV4FeY4+xg+s90HWZNOFrzkLDHmCWjT69U5GoTVEVs3c9vmjjBeugBAAA="
    },
    "Metadata": {
     "aws:cdk:path": "s3-stack/CDKMetadata/Default"

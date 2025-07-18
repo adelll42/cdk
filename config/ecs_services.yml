@@ -1,0 +1,13 @@
+services:
+  - name: backend
+    port: 3000
+    repo: backend
+    secrets:
+      JWT_SECRET: JWT_SECRET
+      JWT_EXPIRES_IN: JWT_EXPIRES_IN
+      DEFAULT_AVATAR: DEFAULT_AVATAR
+
+  - name: frontend
+    port: 80
+    repo: frontend
+    secrets:

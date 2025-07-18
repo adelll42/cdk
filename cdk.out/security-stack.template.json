@@ -1,6 +1,6 @@
 {
  "Resources": {
-  "lambdasg77597EA8": {
+  "lambdasg93781054": {
    "Type": "AWS::EC2::SecurityGroup",
    "Properties": {
     "GroupDescription": "SG for Lambda Functions",
@@ -12,15 +12,13 @@
       "IpProtocol": "-1"
      }
     ],
-    "VpcId": {
-     "Fn::ImportValue": "vpc:ExportsOutputReftransendenceVPCE5114C9175EDFA28"
-    }
+    "VpcId": "vpc-04eca5ddbfd06fabc"
    },
    "Metadata": {
-    "aws:cdk:path": "security-stack/lambdasg/Resource"
+    "aws:cdk:path": "security-stack/lambda-sg/Resource"
    }
   },
-  "bastionsg1FA4DDAF": {
+  "bastionsg9F6FB053": {
    "Type": "AWS::EC2::SecurityGroup",
    "Properties": {
     "GroupDescription": "SG for Bastion Host",
@@ -41,19 +39,17 @@
       "ToPort": 22
      }
     ],
-    "VpcId": {
-     "Fn::ImportValue": "vpc:ExportsOutputReftransendenceVPCE5114C9175EDFA28"
-    }
+    "VpcId": "vpc-04eca5ddbfd06fabc"
    },
    "Metadata": {
-    "aws:cdk:path": "security-stack/bastionsg/Resource"
+    "aws:cdk:path": "security-stack/bastion-sg/Resource"
    }
   },
-  "redissg9A3AB737": {
+  "ecssg0261AE9D": {
    "Type": "AWS::EC2::SecurityGroup",
    "Properties": {
-    "GroupDescription": "SG for Redis Cluster",
-    "GroupName": "tmp-redis-sg",
+    "GroupDescription": "SG for ECS",
+    "GroupName": "tmp-ecs-sg",
     "SecurityGroupEgress": [
      {
       "CidrIp": "0.0.0.0/0",
@@ -61,56 +57,10 @@
       "IpProtocol": "-1"
      }
     ],
-    "VpcId": {
-     "Fn::ImportValue": "vpc:ExportsOutputReftransendenceVPCE5114C9175EDFA28"
-    }
+    "VpcId": "vpc-04eca5ddbfd06fabc"
    },
    "Metadata": {
-    "aws:cdk:path": "security-stack/redissg/Resource"
-   }
-  },
-  "redissgfromsecuritystacklambdasgF241D9AE6379B4CD053A": {
-   "Type": "AWS::EC2::SecurityGroupIngress",
-   "Properties": {
-    "Description": "Access from Lambda functions",
-    "FromPort": 6379,
-    "GroupId": {
-     "Fn::GetAtt": [
-      "redissg9A3AB737",
-      "GroupId"
-     ]
-    },
-    "IpProtocol": "tcp",
-    "SourceSecurityGroupId": {
-     "Fn::GetAtt": [
-      "lambdasg77597EA8",
-      "GroupId"
-     ]
-    },
-    "ToPort": 6379
-   },
-   "Metadata": {
-    "aws:cdk:path": "security-stack/redissg/from securitystacklambdasgF241D9AE:6379"
-   }
-  },
-  "TranscendenceSGDC5F8585": {
-   "Type": "AWS::EC2::SecurityGroup",
-   "Properties": {
-    "GroupDescription": "Allow HTTP and HTTPS",
-    "GroupName": "tmp-transcendence-sg",
-    "SecurityGroupEgress": [
-     {
-      "CidrIp": "0.0.0.0/0",
-      "Description": "Allow all outbound traffic by default",
-      "IpProtocol": "-1"
-     }
-    ],
-    "VpcId": {
-     "Fn::ImportValue": "vpc:ExportsOutputReftransendenceVPCE5114C9175EDFA28"
-    }
-   },
-   "Metadata": {
-    "aws:cdk:path": "security-stack/TranscendenceSG/Resource"
+    "aws:cdk:path": "security-stack/ecs-sg/Resource"
    }
   },
   "dbsgCE6973BD": {
@@ -125,18 +75,16 @@
       "IpProtocol": "-1"
      }
     ],
-    "VpcId": {
-     "Fn::ImportValue": "vpc:ExportsOutputReftransendenceVPCE5114C9175EDFA28"
-    }
+    "VpcId": "vpc-04eca5ddbfd06fabc"
    },
    "Metadata": {
     "aws:cdk:path": "security-stack/db-sg/Resource"
    }
   },
-  "dbsgfromsecuritystackTranscendenceSGFF49A38A5432A4E19654": {
+  "dbsgfromsecuritystackecssgDE676D7C5432B8B5AC88": {
    "Type": "AWS::EC2::SecurityGroupIngress",
    "Properties": {
-    "Description": "PostgreSQL access from ECS",
+    "Description": "PostgreSQL from ECS",
     "FromPort": 5432,
     "GroupId": {
      "Fn::GetAtt": [
@@ -147,68 +95,20 @@
     "IpProtocol": "tcp",
     "SourceSecurityGroupId": {
      "Fn::GetAtt": [
-      "TranscendenceSGDC5F8585",
+      "ecssg0261AE9D",
       "GroupId"
      ]
     },
     "ToPort": 5432
    },
    "Metadata": {
-    "aws:cdk:path": "security-stack/db-sg/from securitystackTranscendenceSGFF49A38A:5432"
-   }
-  },
-  "TranscendenceECSTaskRole66F30C08": {
-   "Type": "AWS::IAM::Role",
-   "Properties": {
-    "AssumeRolePolicyDocument": {
-     "Statement": [
-      {
-       "Action": "sts:AssumeRole",
-       "Effect": "Allow",
-       "Principal": {
-        "Service": "ecs-tasks.amazonaws.com"
-       }
-      }
-     ],
-     "Version": "2012-10-17"
-    },
-    "Description": "Role for ECS tasks to access S3 and Secrets Manager",
-    "ManagedPolicyArns": [
-     {
-      "Fn::Join": [
-       "",
-       [
-        "arn:",
-        {
-         "Ref": "AWS::Partition"
-        },
-        ":iam::aws:policy/AmazonS3ReadOnlyAccess"
-       ]
-      ]
-     },
-     {
-      "Fn::Join": [
-       "",
-       [
-        "arn:",
-        {
-         "Ref": "AWS::Partition"
-        },
-        ":iam::aws:policy/SecretsManagerReadWrite"
-       ]
-      ]
-     }
-    ],
-    "RoleName": "tmp-TranscendenceECSTaskRole"
-   },
-   "Metadata": {
-    "aws:cdk:path": "security-stack/TranscendenceECSTaskRole/Resource"
+    "aws:cdk:path": "security-stack/db-sg/from securitystackecssgDE676D7C:5432"
    }
   },
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/72SS0/DMBCEf0t9rNxQUk65BQ6oB2iVHqMKuesFTJ118IMqsvLfUR5F5XFBgp5sjcafZ7SbJun8KplPxMHNQO5nWu2SuPEC9lwc3ENESJO4QQhW+ebWmlCXkb3VwDI2ZZwJrc0h13oV/M4EkizzNiBnEh1YVXtlaHS6U8a9qLDXW/7XNCHlkp4sOlcEjSwrIwNBS9KKcFAGJhgihA7pRmYg9RpwKY+olvfylG3PkLLz/+uPZ86/5TeP9GlvvgkjoOVKVEksjMYyMuFcqFBeNyyLrLaKQNVC5wAmkD8W6D3dgxw+0rY/FbBG49fcd4LEE8q10Qqafj+qUyW3I2/7a3/fuYvVtt1tFXwdPC/QmWABy2Gu68Y/G7pYJJdpspi8OKVmNpBXFSbFcL4DeZs5CJMDAAA="
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/7WRQU/DMAyFf8tyRGkY2a03xAH1wlB3rCaUOQbCMqckMdVU9b+jrgUNuI6DZen56dOzrZVearVcmC4VYPeFdzvVb7KBvawxBY6AjbgS8ldtpenSE4JW/QaBo8vH+xi4bXrx0YIoTzbjfehuvV9z3gUmK8ocGaWwmCC6NrtAszOdMx7MAU/6IC9NM9ZW9BIxpZo9irLpBRiqyDvCSZmYEIgQRmSamUzunbGyX6jh+xKXT/nPO4/+8/xbefdMP774R5gBwzhYc245D/LxmF8DXa/UjVarxVtyrohM2R1Q1VP/BKj4HFxcAgAA"
    },
    "Metadata": {
     "aws:cdk:path": "security-stack/CDKMetadata/Default"
@@ -216,36 +116,20 @@
   }
  },
  "Outputs": {
+  "SecurityGroupId": {
+   "Value": {
+    "Fn::GetAtt": [
+     "ecssg0261AE9D",
+     "GroupId"
+    ]
+   }
+  },
   "DBSecurityGroupId": {
    "Value": {
     "Fn::GetAtt": [
      "dbsgCE6973BD",
      "GroupId"
     ]
-   }
-  },
-  "VpcId": {
-   "Value": {
-    "Fn::ImportValue": "vpc:ExportsOutputReftransendenceVPCE5114C9175EDFA28"
-   }
-  },
-  "SecurityGroupId": {
-   "Value": {
-    "Fn::GetAtt": [
-     "TranscendenceSGDC5F8585",
-     "GroupId"
-    ]
-   }
-  },
-  "ExportsOutputFnGetAttdbsgCE6973BDGroupIdACE24D8F": {
-   "Value": {
-    "Fn::GetAtt": [
-     "dbsgCE6973BD",
-     "GroupId"
-    ]
-   },
-   "Export": {
-    "Name": "security-stack:ExportsOutputFnGetAttdbsgCE6973BDGroupIdACE24D8F"
    }
   }
  },

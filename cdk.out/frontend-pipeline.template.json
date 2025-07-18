@@ -193,7 +193,7 @@
         },
         "Configuration": {
          "ClusterName": {
-          "Fn::ImportValue": "ecs-cluster-stack:ExportsOutputRefTranscendenceClusterC99018D32A383028"
+          "Fn::ImportValue": "ecs-cluster-stack:ExportsOutputReftransendenceClusterC99018D32A383028"
          },
          "ServiceName": {
           "Fn::ImportValue": "ecs-services-stack:ExportsOutputFnGetAttFrontendServiceBC94BA93NameC081D229"

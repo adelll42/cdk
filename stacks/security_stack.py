@@ -1,83 +1,63 @@
+import os
+import yaml
 from aws_cdk import (
-    Stack,
-    aws_ecs as ecs,
-    aws_ecs_patterns as ecs_patterns,
-    aws_ecr_assets as ecr_assets,
-    aws_rds as rds,
-    aws_secretsmanager as secretsmanager,
-    aws_ec2 as ec2,
-    aws_ssm as ssm,
-    aws_iam as iam,
-    CfnOutput
+    Stack, aws_ec2 as ec2, CfnOutput
 )
 from constructs import Construct
-import os
+from aws_cdk import aws_ssm as ssm
+from helpers.vpc_lookup import get_vpc_id
+
 
 class SecurityStack(Stack):
-
-    def __init__(self, scope: Construct, id: str,vpc: ec2.Vpc, **kwargs) -> None:
+    def __init__(
+            self,
+            scope: Construct,
+            id: str,
+            **kwargs
+        ):
+        
         super().__init__(scope, id, **kwargs)
-        self.vpc = vpc
 
-        prj_name = self.node.try_get_context("transendence")
-        env_name = self.node.try_get_context("env")
+        vpc_id = get_vpc_id("transendence")
+        self.vpc = ec2.Vpc.from_lookup(self, "VpcImported", vpc_id=vpc_id)
 
-        self.lambda_sg = ec2.SecurityGroup(self, 'lambdasg',
-            security_group_name='tmp-lambda-sg',
-            vpc=vpc,
-            description="SG for Lambda Functions",
-            allow_all_outbound=True
-        )
-        
-        self.bastion_sg = ec2.SecurityGroup(self, 'bastionsg',
-            security_group_name='tmp-bastion-sg',
-            vpc=vpc,
-            description="SG for Bastion Host",
-            allow_all_outbound=True
-        )
 
-        self.bastion_sg.add_ingress_rule(ec2.Peer.any_ipv4(), ec2.Port.tcp(22), "SSH Access")
-        
-        redis_sg = ec2.SecurityGroup(self, 'redissg',
-            security_group_name='tmp-redis-sg',
-            vpc=vpc,
-            description="SG for Redis Cluster",
-            allow_all_outbound=True
-        )
-        redis_sg.add_ingress_rule(self.lambda_sg, ec2.Port.tcp(6379), 'Access from Lambda functions')
+        self.sg_lookup = {}
 
-        self.ecs_sg = ec2.SecurityGroup(
-            self, "TranscendenceSG",
-            vpc=self.vpc,
-            security_group_name='tmp-transcendence-sg',
-            description="Allow HTTP and HTTPS",
-            allow_all_outbound=True
-        )
+        config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'security_groups.yml')
+        with open(config_path, 'r') as file:
+            config = yaml.safe_load(file)
 
-        self.db_sg = ec2.SecurityGroup(
-            self, 'db-sg',
-            security_group_name='tmp-db-sg',
-            vpc=vpc,
-            description="SG for RDS",
-            allow_all_outbound=True
-        )
+        for sg_def in config["security_groups"]:
+            name = sg_def["name"]
+            sg = ec2.SecurityGroup(self, name,
+                security_group_name=f"tmp-{name}",
+                vpc=self.vpc,
+                description=sg_def.get("description", name),
+                allow_all_outbound=sg_def.get("allow_all_outbound", True)
+            )
+            self.sg_lookup[name] = sg
 
-        self.db_sg.add_ingress_rule(self.ecs_sg, ec2.Port.tcp(5432), "PostgreSQL access from ECS")
+        for sg_def in config["security_groups"]:
+            sg = self.sg_lookup[sg_def["name"]]
+            for rule in sg_def.get("ingress", []):
+                port = ec2.Port.tcp(rule["port"]) if rule["protocol"] == "tcp" else None
+                desc = rule.get("description", "")
+                if "source" in rule:
+                    sg.add_ingress_rule(
+                        peer=ec2.Peer.ipv4(rule["source"]),
+                        connection=port,
+                        description=desc
+                    )
+                elif "source_sg" in rule:
+                    source_sg = self.sg_lookup[rule["source_sg"]]
+                    sg.add_ingress_rule(
+                        peer=source_sg,
+                        connection=port,
+                        description=desc
+                    )
 
-        CfnOutput(self, "DBSecurityGroupId", value=self.db_sg.security_group_id)
-
-        self.ecs_task_role = iam.Role(
-            self, "TranscendenceECSTaskRole",
-            role_name="tmp-TranscendenceECSTaskRole",
-            assumed_by=iam.ServicePrincipal("ecs-tasks.amazonaws.com"),
-            description="Role for ECS tasks to access S3 and Secrets Manager"
-        )
-        self.ecs_task_role.add_managed_policy(
-            iam.ManagedPolicy.from_aws_managed_policy_name("AmazonS3ReadOnlyAccess")
-        )
-        self.ecs_task_role.add_managed_policy(
-            iam.ManagedPolicy.from_aws_managed_policy_name("SecretsManagerReadWrite")
-        )
-
-        CfnOutput(self, "VpcId", value=self.vpc.vpc_id)
-        CfnOutput(self, "SecurityGroupId", value=self.ecs_sg.security_group_id)
+        if "ecs-sg" in self.sg_lookup:
+            CfnOutput(self, "SecurityGroupId", value=self.sg_lookup["ecs-sg"].security_group_id)
+        if "db-sg" in self.sg_lookup:
+            CfnOutput(self, "DBSecurityGroupId", value=self.sg_lookup["db-sg"].security_group_id)

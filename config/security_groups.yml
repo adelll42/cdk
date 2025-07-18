@@ -13,15 +13,6 @@ security_groups:
         source: "0.0.0.0/0"
         description: SSH Access
 
-  - name: redis-sg
-    description: SG for Redis
-    allow_all_outbound: true
-    ingress:
-      - protocol: tcp
-        port: 6379
-        source_sg: lambda-sg
-        description: Access from Lambda
-
   - name: ecs-sg
     description: SG for ECS
     allow_all_outbound: true

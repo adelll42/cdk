@@ -37,6 +37,6 @@ class ACMStack(Stack):
 
             ssm.StringParameter(
                 self, f"{cert_id}-CertArn",
-                parameter_name=f"/transcendence/certificates/{cert_id}/arn",
+                parameter_name=f"/transendence/certificates/{cert_id}/arn",
                 string_value=certificate.certificate_arn
             )

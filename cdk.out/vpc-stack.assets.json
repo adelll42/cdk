@@ -1,22 +1,7 @@
 {
   "version": "44.0.0",
   "files": {
-    "7fa1e366ee8a9ded01fc355f704cff92bfd179574e6f9cfee800a3541df1b200": {
-      "displayName": "vpc-stack/Custom::VpcRestrictDefaultSGCustomResourceProvider Code",
-      "source": {
-        "path": "asset.7fa1e366ee8a9ded01fc355f704cff92bfd179574e6f9cfee800a3541df1b200",
-        "packaging": "zip"
-      },
-      "destinations": {
-        "577638398727-eu-west-2": {
-          "bucketName": "cdk-hnb659fds-assets-577638398727-eu-west-2",
-          "objectKey": "7fa1e366ee8a9ded01fc355f704cff92bfd179574e6f9cfee800a3541df1b200.zip",
-          "region": "eu-west-2",
-          "assumeRoleArn": "arn:${AWS::Partition}:iam::577638398727:role/cdk-hnb659fds-file-publishing-role-577638398727-eu-west-2"
-        }
-      }
-    },
-    "a13a0d5767c02a159d3e2096ee8bf45462f0ec9706e28da17aaa5bf8593b10ec": {
+    "5defed1a48db18f73f23e22c78d02d352a02b5f2afcd711e20869493923d2e9c": {
       "displayName": "vpc-stack Template",
       "source": {
         "path": "vpc-stack.template.json",
@@ -25,7 +10,7 @@
       "destinations": {
         "577638398727-eu-west-2": {
           "bucketName": "cdk-hnb659fds-assets-577638398727-eu-west-2",
-          "objectKey": "a13a0d5767c02a159d3e2096ee8bf45462f0ec9706e28da17aaa5bf8593b10ec.json",
+          "objectKey": "5defed1a48db18f73f23e22c78d02d352a02b5f2afcd711e20869493923d2e9c.json",
           "region": "eu-west-2",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::577638398727:role/cdk-hnb659fds-file-publishing-role-577638398727-eu-west-2"
         }

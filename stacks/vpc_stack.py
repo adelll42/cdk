@@ -11,14 +11,7 @@ from helpers.get_or_create_parameter import get_or_create_parameter
 
 
 class VpcStack(Stack):
-
-    def __init__(
-            self,
-            scope: Construct,
-            construct_id: str,
-            **kwargs
-            ):
-        
+    def __init__(self, scope: Construct, construct_id: str, **kwargs):
         super().__init__(scope, construct_id, **kwargs)
 
         config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'vpcs.yml')
@@ -29,54 +22,45 @@ class VpcStack(Stack):
 
         for vpc_def in vpcs:
             name = vpc_def["name"]
-            cidr = vpc_def["cidr"]
-            nat_gateways = vpc_def.get("nat_gateways", 0)
             subnet_defs = vpc_def.get("subnets", [])
-            max_azs = vpc_def.get("max_azs", 2)
-            enable_dns_support = vpc_def.get("enable_dns_support", True)
-            enable_dns_hostnames = vpc_def.get("enable_dns_hostnames", True)
 
-
-            subnet_configs = []
-            for subnet in subnet_defs:
-                subnet_configs.append(
-                    ec2.SubnetConfiguration(
-                        name=subnet["name"],
-                        subnet_type=ec2.SubnetType[subnet["type"]],
-                        cidr_mask=subnet["cidr_mask"]
-                    )
+            subnet_configs = [
+                ec2.SubnetConfiguration(
+                    name=subnet["name"],
+                    subnet_type=ec2.SubnetType[subnet["type"]],
+                    cidr_mask=subnet["cidr_mask"]
                 )
+                for subnet in subnet_defs
+            ]
 
-            logical_id_param = f"/transcendence/vpc-logical-id/{name}"
+            logical_id_param = f"/transendence/vpc-logical-id/{name}"
             random_id = f"vpc-{name}-{random.randint(1000, 9999)}"
             logical_id = get_or_create_parameter(logical_id_param, random_id)
 
             vpc = ec2.Vpc(self, logical_id,
                 vpc_name=logical_id,
-                cidr=cidr,
-                max_azs=max_azs,
+                cidr=vpc_def["cidr"],
+                max_azs=vpc_def.get("max_azs", 2),
                 subnet_configuration=subnet_configs,
-                nat_gateways=nat_gateways,
-                enable_dns_support=enable_dns_support,
-                enable_dns_hostnames=enable_dns_hostnames
+                nat_gateways=vpc_def.get("nat_gateways", 0),
+                enable_dns_support=vpc_def.get("enable_dns_support", True),
+                enable_dns_hostnames=vpc_def.get("enable_dns_hostnames", True),
+                restrict_default_security_group=vpc_def.get("restrict_default_security_group", True)
             )
 
-
             ssm.StringParameter(self, f"VpcId-{name}",
-                parameter_name=f"/transcendence/vpc-id/{name}",
+                parameter_name=f"/transendence/vpc-id/{name}",
                 string_value=vpc.vpc_id
             )
 
             for i, subnet in enumerate(vpc.private_subnets, 1):
                 ssm.StringParameter(self, f"{name}-private-subnet-{i}",
-                    parameter_name=f"/transcendence/{name}/private-subnet-{i}",
+                    parameter_name=f"/transendence/{name}/private-subnet-{i}",
                     string_value=subnet.subnet_id
                 )
 
-            
             for i, subnet in enumerate(vpc.public_subnets, 1):
                 ssm.StringParameter(self, f"{name}-public-subnet-{i}",
-                    parameter_name=f"/transcendence/{name}/public-subnet-{i}",
+                    parameter_name=f"/transendence/{name}/public-subnet-{i}",
                     string_value=subnet.subnet_id
                 )
-

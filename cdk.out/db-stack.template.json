@@ -1,39 +1,39 @@
 {
  "Resources": {
-  "TranscendenceDBSecret0B32177A": {
+  "transendenceDBSecret0B32177A": {
    "Type": "AWS::SecretsManager::Secret",
    "Properties": {
     "GenerateSecretString": {
      "ExcludePunctuation": true,
      "GenerateStringKey": "password",
-     "SecretStringTemplate": "{\"username\":\"transcendence_admin\"}"
+     "SecretStringTemplate": "{\"username\":\"transendence_admin\"}"
     }
    },
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
    "Metadata": {
-    "aws:cdk:path": "db-stack/TranscendenceDBSecret/Resource"
+    "aws:cdk:path": "db-stack/transendenceDBSecret/Resource"
    }
   },
-  "TranscendenceDBSecretAttachment485CB8B1": {
+  "transendenceDBSecretAttachment485CB8B1": {
    "Type": "AWS::SecretsManager::SecretTargetAttachment",
    "Properties": {
     "SecretId": {
-     "Ref": "TranscendenceDBSecret0B32177A"
+     "Ref": "transendenceDBSecret0B32177A"
     },
     "TargetId": {
-     "Ref": "TranscendencePostgresED41A5FF"
+     "Ref": "transendencePostgresED41A5FF"
     },
     "TargetType": "AWS::RDS::DBInstance"
    },
    "Metadata": {
-    "aws:cdk:path": "db-stack/TranscendenceDBSecret/Attachment/Resource"
+    "aws:cdk:path": "db-stack/transendenceDBSecret/Attachment/Resource"
    }
   },
-  "TranscendencePostgresSubnetGroup383432E4": {
+  "transendencePostgresSubnetGroup383432E4": {
    "Type": "AWS::RDS::DBSubnetGroup",
    "Properties": {
-    "DBSubnetGroupDescription": "Subnet group for TranscendencePostgres database",
+    "DBSubnetGroupDescription": "Subnet group for transendencePostgres database",
     "SubnetIds": [
      {
       "Fn::ImportValue": "vpc:ExportsOutputReftransendenceVPCPrivateSubnet1SubnetC9B80BEAF1024A84"
@@ -44,17 +44,17 @@
     ]
    },
    "Metadata": {
-    "aws:cdk:path": "db-stack/TranscendencePostgres/SubnetGroup/Default"
+    "aws:cdk:path": "db-stack/transendencePostgres/SubnetGroup/Default"
    }
   },
-  "TranscendencePostgresED41A5FF": {
+  "transendencePostgresED41A5FF": {
    "Type": "AWS::RDS::DBInstance",
    "Properties": {
     "AllocatedStorage": "20",
     "CopyTagsToSnapshot": true,
     "DBInstanceClass": "db.m5.large",
     "DBSubnetGroupName": {
-     "Ref": "TranscendencePostgresSubnetGroup383432E4"
+     "Ref": "transendencePostgresSubnetGroup383432E4"
     },
     "Engine": "postgres",
     "EngineVersion": "14",
@@ -64,7 +64,7 @@
       [
        "{{resolve:secretsmanager:",
        {
-        "Ref": "TranscendenceDBSecret0B32177A"
+        "Ref": "transendenceDBSecret0B32177A"
        },
        ":SecretString:password::}}"
       ]
@@ -76,7 +76,7 @@
       [
        "{{resolve:secretsmanager:",
        {
-        "Ref": "TranscendenceDBSecret0B32177A"
+        "Ref": "transendenceDBSecret0B32177A"
        },
        ":SecretString:username::}}"
       ]
@@ -94,7 +94,7 @@
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
    "Metadata": {
-    "aws:cdk:path": "db-stack/TranscendencePostgres/Resource"
+    "aws:cdk:path": "db-stack/transendencePostgres/Resource"
    }
   },
   "CDKMetadata": {

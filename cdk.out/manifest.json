@@ -18,7 +18,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::577638398727:role/cdk-hnb659fds-deploy-role-577638398727-eu-west-2",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::577638398727:role/cdk-hnb659fds-cfn-exec-role-577638398727-eu-west-2",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-577638398727-eu-west-2/a13a0d5767c02a159d3e2096ee8bf45462f0ec9706e28da17aaa5bf8593b10ec.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-577638398727-eu-west-2/5defed1a48db18f73f23e22c78d02d352a02b5f2afcd711e20869493923d2e9c.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -34,7 +34,7 @@
         "vpc-stack.assets"
       ],
       "metadata": {
-        "/vpc-stack/vpc-transendence-5271": [
+        "/vpc-stack/vpc-transendence-3502": [
           {
             "type": "aws:cdk:analytics:construct",
             "data": {
@@ -43,6 +43,7 @@
               "enableDnsSupport": true,
               "maxAzs": "*",
               "natGateways": "*",
+              "restrictDefaultSecurityGroup": false,
               "subnetConfiguration": [
                 {
                   "name": "*",
@@ -59,13 +60,13 @@
             }
           }
         ],
-        "/vpc-stack/vpc-transendence-5271/Resource": [
+        "/vpc-stack/vpc-transendence-3502/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "vpctransendence52719E7E7FE7"
+            "data": "vpctransendence350299F02C6A"
           }
         ],
-        "/vpc-stack/vpc-transendence-5271/PublicSubnet1": [
+        "/vpc-stack/vpc-transendence-3502/PublicSubnet1": [
           {
             "type": "aws:cdk:analytics:construct",
             "data": {
@@ -101,43 +102,43 @@
             }
           }
         ],
-        "/vpc-stack/vpc-transendence-5271/PublicSubnet1/Subnet": [
+        "/vpc-stack/vpc-transendence-3502/PublicSubnet1/Subnet": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "vpctransendence5271PublicSubnet1SubnetE9614D20"
+            "data": "vpctransendence3502PublicSubnet1SubnetC790F946"
           }
         ],
-        "/vpc-stack/vpc-transendence-5271/PublicSubnet1/RouteTable": [
+        "/vpc-stack/vpc-transendence-3502/PublicSubnet1/RouteTable": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "vpctransendence5271PublicSubnet1RouteTable679A9935"
+            "data": "vpctransendence3502PublicSubnet1RouteTable5D74287D"
           }
         ],
-        "/vpc-stack/vpc-transendence-5271/PublicSubnet1/RouteTableAssociation": [
+        "/vpc-stack/vpc-transendence-3502/PublicSubnet1/RouteTableAssociation": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "vpctransendence5271PublicSubnet1RouteTableAssociationACA2DC10"
+            "data": "vpctransendence3502PublicSubnet1RouteTableAssociationD36B73C6"
           }
         ],
-        "/vpc-stack/vpc-transendence-5271/PublicSubnet1/DefaultRoute": [
+        "/vpc-stack/vpc-transendence-3502/PublicSubnet1/DefaultRoute": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "vpctransendence5271PublicSubnet1DefaultRouteE536E89C"
+            "data": "vpctransendence3502PublicSubnet1DefaultRoute67175EC1"
           }
         ],
-        "/vpc-stack/vpc-transendence-5271/PublicSubnet1/EIP": [
+        "/vpc-stack/vpc-transendence-3502/PublicSubnet1/EIP": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "vpctransendence5271PublicSubnet1EIP75CBD675"
+            "data": "vpctransendence3502PublicSubnet1EIP2F42E0B6"
           }
         ],
-        "/vpc-stack/vpc-transendence-5271/PublicSubnet1/NATGateway": [
+        "/vpc-stack/vpc-transendence-3502/PublicSubnet1/NATGateway": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "vpctransendence5271PublicSubnet1NATGateway0D2E06C1"
+            "data": "vpctransendence3502PublicSubnet1NATGateway9CDE1E98"
           }
         ],
-        "/vpc-stack/vpc-transendence-5271/PublicSubnet2": [
+        "/vpc-stack/vpc-transendence-3502/PublicSubnet2": [
           {
             "type": "aws:cdk:analytics:construct",
             "data": {
@@ -165,31 +166,31 @@
             "data": {}
           }
         ],
-        "/vpc-stack/vpc-transendence-5271/PublicSubnet2/Subnet": [
+        "/vpc-stack/vpc-transendence-3502/PublicSubnet2/Subnet": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "vpctransendence5271PublicSubnet2SubnetAD094670"
+            "data": "vpctransendence3502PublicSubnet2SubnetFE137C9B"
           }
         ],
-        "/vpc-stack/vpc-transendence-5271/PublicSubnet2/RouteTable": [
+        "/vpc-stack/vpc-transendence-3502/PublicSubnet2/RouteTable": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "vpctransendence5271PublicSubnet2RouteTableCC494BCD"
+            "data": "vpctransendence3502PublicSubnet2RouteTable88E96050"
           }
         ],
-        "/vpc-stack/vpc-transendence-5271/PublicSubnet2/RouteTableAssociation": [
+        "/vpc-stack/vpc-transendence-3502/PublicSubnet2/RouteTableAssociation": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "vpctransendence5271PublicSubnet2RouteTableAssociationCDBC4AE9"
+            "data": "vpctransendence3502PublicSubnet2RouteTableAssociation0E072A5D"
           }
         ],
-        "/vpc-stack/vpc-transendence-5271/PublicSubnet2/DefaultRoute": [
+        "/vpc-stack/vpc-transendence-3502/PublicSubnet2/DefaultRoute": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "vpctransendence5271PublicSubnet2DefaultRoute9BB325A1"
+            "data": "vpctransendence3502PublicSubnet2DefaultRoute24D97138"
           }
         ],
-        "/vpc-stack/vpc-transendence-5271/PrivateSubnet1": [
+        "/vpc-stack/vpc-transendence-3502/PrivateSubnet1": [
           {
             "type": "aws:cdk:analytics:construct",
             "data": {
@@ -213,25 +214,25 @@
             }
           }
         ],
-        "/vpc-stack/vpc-transendence-5271/PrivateSubnet1/Subnet": [
+        "/vpc-stack/vpc-transendence-3502/PrivateSubnet1/Subnet": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "vpctransendence5271PrivateSubnet1Subnet59DB4035"
+            "data": "vpctransendence3502PrivateSubnet1Subnet6B8BB489"
           }
         ],
-        "/vpc-stack/vpc-transendence-5271/PrivateSubnet1/RouteTable": [
+        "/vpc-stack/vpc-transendence-3502/PrivateSubnet1/RouteTable": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "vpctransendence5271PrivateSubnet1RouteTable024249F6"
+            "data": "vpctransendence3502PrivateSubnet1RouteTable0CB70269"
           }
         ],
-        "/vpc-stack/vpc-transendence-5271/PrivateSubnet1/RouteTableAssociation": [
+        "/vpc-stack/vpc-transendence-3502/PrivateSubnet1/RouteTableAssociation": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "vpctransendence5271PrivateSubnet1RouteTableAssociationD929051D"
+            "data": "vpctransendence3502PrivateSubnet1RouteTableAssociation5935271B"
           }
         ],
-        "/vpc-stack/vpc-transendence-5271/PrivateSubnet2": [
+        "/vpc-stack/vpc-transendence-3502/PrivateSubnet2": [
           {
             "type": "aws:cdk:analytics:construct",
             "data": {
@@ -255,64 +256,34 @@
             }
           }
         ],
-        "/vpc-stack/vpc-transendence-5271/PrivateSubnet2/Subnet": [
+        "/vpc-stack/vpc-transendence-3502/PrivateSubnet2/Subnet": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "vpctransendence5271PrivateSubnet2SubnetD111370F"
+            "data": "vpctransendence3502PrivateSubnet2Subnet0FEC6BD3"
           }
         ],
-        "/vpc-stack/vpc-transendence-5271/PrivateSubnet2/RouteTable": [
+        "/vpc-stack/vpc-transendence-3502/PrivateSubnet2/RouteTable": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "vpctransendence5271PrivateSubnet2RouteTableD92F176E"
+            "data": "vpctransendence3502PrivateSubnet2RouteTable0CC90937"
           }
         ],
-        "/vpc-stack/vpc-transendence-5271/PrivateSubnet2/RouteTableAssociation": [
+        "/vpc-stack/vpc-transendence-3502/PrivateSubnet2/RouteTableAssociation": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "vpctransendence5271PrivateSubnet2RouteTableAssociation58BF2867"
+            "data": "vpctransendence3502PrivateSubnet2RouteTableAssociation3748E639"
           }
         ],
-        "/vpc-stack/vpc-transendence-5271/IGW": [
+        "/vpc-stack/vpc-transendence-3502/IGW": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "vpctransendence5271IGWA63629C2"
+            "data": "vpctransendence3502IGW2E04637E"
           }
         ],
-        "/vpc-stack/vpc-transendence-5271/VPCGW": [
+        "/vpc-stack/vpc-transendence-3502/VPCGW": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "vpctransendence5271VPCGW7C6020FA"
-          }
-        ],
-        "/vpc-stack/vpc-transendence-5271/RestrictDefaultSecurityGroupCustomResource": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": "*"
-          }
-        ],
-        "/vpc-stack/vpc-transendence-5271/RestrictDefaultSecurityGroupCustomResource/Default": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "vpctransendence5271RestrictDefaultSecurityGroupCustomResourceAC0189BF"
-          }
-        ],
-        "/vpc-stack/Custom::VpcRestrictDefaultSGCustomResourceProvider": [
-          {
-            "type": "aws:cdk:is-custom-resource-handler-customResourceProvider",
-            "data": true
-          }
-        ],
-        "/vpc-stack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Role": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0"
-          }
-        ],
-        "/vpc-stack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E"
+            "data": "vpctransendence3502VPCGW3C19763A"
           }
         ],
         "/vpc-stack/VpcId-transendence": [
@@ -380,6 +351,1170 @@
         ]
       },
       "displayName": "vpc-stack"
+    },
+    "iam-stack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "iam-stack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "iam-stack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://577638398727/eu-west-2",
+      "properties": {
+        "templateFile": "iam-stack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::577638398727:role/cdk-hnb659fds-deploy-role-577638398727-eu-west-2",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::577638398727:role/cdk-hnb659fds-cfn-exec-role-577638398727-eu-west-2",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-577638398727-eu-west-2/c6a433f2eb8730d702ef80105475a75a5daf2df0c5ba0d88aace844baff80a4e.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "iam-stack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::577638398727:role/cdk-hnb659fds-lookup-role-577638398727-eu-west-2",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "iam-stack.assets"
+      ],
+      "metadata": {
+        "/iam-stack/transendence-ecs-task-role-role": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "assumedBy": {
+                "principalAccount": "*",
+                "assumeRoleAction": "*"
+              },
+              "description": "*",
+              "roleName": "*"
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addManagedPolicy": [
+                {
+                  "managedPolicyArn": "*"
+                }
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addManagedPolicy": [
+                {
+                  "managedPolicyArn": "*"
+                }
+              ]
+            }
+          }
+        ],
+        "/iam-stack/transendence-ecs-task-role-role/Importtransendence-ecs-task-role-role": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          }
+        ],
+        "/iam-stack/transendence-ecs-task-role-role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "transendenceecstaskrolerole36B872E9"
+          }
+        ],
+        "/iam-stack/transendence-ecs-task-role-param": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "parameterName": "*",
+              "stringValue": "*"
+            }
+          }
+        ],
+        "/iam-stack/transendence-ecs-task-role-param/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "transendenceecstaskroleparam14475A1A"
+          }
+        ],
+        "/iam-stack/lambda-basic-role-role": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "assumedBy": {
+                "principalAccount": "*",
+                "assumeRoleAction": "*"
+              },
+              "description": "*",
+              "roleName": "*"
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addManagedPolicy": [
+                {
+                  "managedPolicyArn": "*"
+                }
+              ]
+            }
+          }
+        ],
+        "/iam-stack/lambda-basic-role-role/Importlambda-basic-role-role": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          }
+        ],
+        "/iam-stack/lambda-basic-role-role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "lambdabasicrolerole4DFA3BAD"
+          }
+        ],
+        "/iam-stack/lambda-basic-role-param": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "parameterName": "*",
+              "stringValue": "*"
+            }
+          }
+        ],
+        "/iam-stack/lambda-basic-role-param/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "lambdabasicroleparam3CC0E127"
+          }
+        ],
+        "/iam-stack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/iam-stack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/iam-stack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "iam-stack"
+    },
+    "security-stack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "security-stack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "security-stack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://577638398727/eu-west-2",
+      "properties": {
+        "templateFile": "security-stack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::577638398727:role/cdk-hnb659fds-deploy-role-577638398727-eu-west-2",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::577638398727:role/cdk-hnb659fds-cfn-exec-role-577638398727-eu-west-2",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-577638398727-eu-west-2/2948375efc8ccba7dab71a4c3bd32eef1c70e7580fecd7880941aa07ea837c56.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "security-stack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::577638398727:role/cdk-hnb659fds-lookup-role-577638398727-eu-west-2",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "security-stack.assets"
+      ],
+      "metadata": {
+        "/security-stack/VpcImported": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          }
+        ],
+        "/security-stack/VpcImported/PublicSubnet1": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          }
+        ],
+        "/security-stack/VpcImported/PublicSubnet2": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          }
+        ],
+        "/security-stack/VpcImported/PrivateSubnet1": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          }
+        ],
+        "/security-stack/VpcImported/PrivateSubnet2": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          }
+        ],
+        "/security-stack/lambda-sg": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "vpc": "*",
+              "allowAllOutbound": true,
+              "description": "*",
+              "securityGroupName": "*"
+            }
+          }
+        ],
+        "/security-stack/lambda-sg/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "lambdasg93781054"
+          }
+        ],
+        "/security-stack/bastion-sg": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "vpc": "*",
+              "allowAllOutbound": true,
+              "description": "*",
+              "securityGroupName": "*"
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addIngressRule": [
+                {
+                  "canInlineRule": true,
+                  "connections": "*",
+                  "uniqueId": "*"
+                },
+                {},
+                "*",
+                "*"
+              ]
+            }
+          }
+        ],
+        "/security-stack/bastion-sg/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "bastionsg9F6FB053"
+          }
+        ],
+        "/security-stack/ecs-sg": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "vpc": "*",
+              "allowAllOutbound": true,
+              "description": "*",
+              "securityGroupName": "*"
+            }
+          }
+        ],
+        "/security-stack/ecs-sg/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ecssg0261AE9D"
+          }
+        ],
+        "/security-stack/db-sg": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "vpc": "*",
+              "allowAllOutbound": true,
+              "description": "*",
+              "securityGroupName": "*"
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addIngressRule": [
+                "*",
+                {},
+                "*",
+                "*"
+              ]
+            }
+          }
+        ],
+        "/security-stack/db-sg/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "dbsgCE6973BD"
+          }
+        ],
+        "/security-stack/db-sg/from securitystackecssgDE676D7C:5432": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "dbsgfromsecuritystackecssgDE676D7C5432B8B5AC88"
+          }
+        ],
+        "/security-stack/SecurityGroupId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SecurityGroupId"
+          }
+        ],
+        "/security-stack/DBSecurityGroupId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DBSecurityGroupId"
+          }
+        ],
+        "/security-stack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/security-stack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/security-stack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "security-stack"
+    },
+    "s3-stack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "s3-stack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "s3-stack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://577638398727/eu-west-2",
+      "properties": {
+        "templateFile": "s3-stack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::577638398727:role/cdk-hnb659fds-deploy-role-577638398727-eu-west-2",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::577638398727:role/cdk-hnb659fds-cfn-exec-role-577638398727-eu-west-2",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-577638398727-eu-west-2/964adb521f116908fef10219fc9154d2cf90ef3ee6acd2b0e39ddd6566ac6cd3.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "s3-stack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::577638398727:role/cdk-hnb659fds-lookup-role-577638398727-eu-west-2",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "s3-stack.assets"
+      ],
+      "metadata": {
+        "/s3-stack/transendenceAppAssets": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "blockPublicAccess": "*",
+              "bucketName": "*",
+              "cors": [
+                {
+                  "allowedMethods": [
+                    "GET",
+                    "PUT"
+                  ],
+                  "allowedOrigins": "*",
+                  "allowedHeaders": "*"
+                }
+              ],
+              "encryption": "S3_MANAGED",
+              "lifecycleRules": [
+                {
+                  "enabled": true,
+                  "id": "*"
+                }
+              ],
+              "removalPolicy": "destroy",
+              "versioned": true
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addCorsRule": [
+                {
+                  "allowedMethods": [
+                    "GET",
+                    "PUT"
+                  ],
+                  "allowedOrigins": "*",
+                  "allowedHeaders": "*"
+                },
+                "*",
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addLifecycleRule": [
+                {
+                  "enabled": true,
+                  "id": "*"
+                },
+                "*",
+                "*"
+              ]
+            }
+          }
+        ],
+        "/s3-stack/transendenceAppAssets/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "transendenceAppAssetsF218E671"
+          }
+        ],
+        "/s3-stack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/s3-stack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/s3-stack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "s3-stack"
+    },
+    "ecs-cluster-stack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "ecs-cluster-stack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "ecs-cluster-stack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://577638398727/eu-west-2",
+      "properties": {
+        "templateFile": "ecs-cluster-stack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::577638398727:role/cdk-hnb659fds-deploy-role-577638398727-eu-west-2",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::577638398727:role/cdk-hnb659fds-cfn-exec-role-577638398727-eu-west-2",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-577638398727-eu-west-2/11371fbb9279ccad1d70e4446f676ec192eba43c3c46df80d08cb35f0512a959.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "ecs-cluster-stack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::577638398727:role/cdk-hnb659fds-lookup-role-577638398727-eu-west-2",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "ecs-cluster-stack.assets"
+      ],
+      "metadata": {
+        "/ecs-cluster-stack/VpcImported": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          }
+        ],
+        "/ecs-cluster-stack/VpcImported/PublicSubnet1": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          }
+        ],
+        "/ecs-cluster-stack/VpcImported/PublicSubnet2": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          }
+        ],
+        "/ecs-cluster-stack/VpcImported/PrivateSubnet1": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          }
+        ],
+        "/ecs-cluster-stack/VpcImported/PrivateSubnet2": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "clusterName": "*",
+              "vpc": "*"
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addCapacity": [
+                "*",
+                {
+                  "maxCapacity": "*",
+                  "minCapacity": "*",
+                  "vpcSubnets": {
+                    "subnetType": "Public"
+                  },
+                  "instanceType": "*"
+                }
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addAutoScalingGroup": [
+                "*",
+                {
+                  "machineImageType": 0
+                }
+              ]
+            }
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "transendenceCluster96817F64"
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "vpc": "*",
+              "machineImage": "*",
+              "updateType": "Replace",
+              "maxCapacity": "*",
+              "minCapacity": "*",
+              "vpcSubnets": {
+                "subnetType": "Public"
+              },
+              "instanceType": "*"
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addUserData": [
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToRolePolicy": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToRolePolicy": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToRolePolicy": [
+                {}
+              ]
+            }
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/InstanceSecurityGroup": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "vpc": "*",
+              "allowAllOutbound": true
+            }
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/InstanceSecurityGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "transendenceClusterDefaultAutoScalingGroupInstanceSecurityGroupF9CE0082"
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/InstanceRole": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "roleName": "*",
+              "assumedBy": {
+                "principalAccount": "*",
+                "assumeRoleAction": "*"
+              }
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToPrincipalPolicy": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachInlinePolicy": [
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachInlinePolicy": [
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToPrincipalPolicy": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToPrincipalPolicy": [
+                {}
+              ]
+            }
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/InstanceRole/ImportInstanceRole": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/InstanceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "transendenceClusterDefaultAutoScalingGroupInstanceRoleA6854BF3"
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/InstanceRole/DefaultPolicy": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachToRole": [
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachToRole": [
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addStatements": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addStatements": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addStatements": [
+                {}
+              ]
+            }
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/InstanceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "transendenceClusterDefaultAutoScalingGroupInstanceRoleDefaultPolicy2B635B3A"
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/InstanceProfile": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "transendenceClusterDefaultAutoScalingGroupInstanceProfile58EFAEAD"
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/LaunchTemplate": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "machineImage": "*",
+              "instanceType": "*",
+              "detailedMonitoring": false,
+              "securityGroup": "*",
+              "userData": "*",
+              "associatePublicIpAddress": "*",
+              "spotOptions": "*",
+              "blockDevices": "*",
+              "instanceProfile": "*",
+              "keyPair": "*"
+            }
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/LaunchTemplate/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "transendenceClusterDefaultAutoScalingGroupLaunchTemplate90291793"
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/ASG": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "transendenceClusterDefaultAutoScalingGroupASG36A33B21"
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/DrainECSHook/Function": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "code": "*",
+              "handler": "*",
+              "runtime": "*",
+              "timeout": "*",
+              "environment": "*"
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addEnvironment": [
+                "*",
+                "*"
+              ]
+            }
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/DrainECSHook/Function/ServiceRole": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "assumedBy": {
+                "principalAccount": "*",
+                "assumeRoleAction": "*"
+              },
+              "managedPolicies": [
+                {
+                  "managedPolicyArn": "*"
+                }
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToPrincipalPolicy": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachInlinePolicy": [
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachInlinePolicy": [
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToPrincipalPolicy": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToPrincipalPolicy": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToPrincipalPolicy": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToPrincipalPolicy": [
+                {}
+              ]
+            }
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/DrainECSHook/Function/ServiceRole/ImportServiceRole": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/DrainECSHook/Function/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "transendenceClusterDefaultAutoScalingGroupDrainECSHookFunctionServiceRole4C55685F"
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/DrainECSHook/Function/ServiceRole/DefaultPolicy": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachToRole": [
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachToRole": [
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addStatements": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addStatements": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addStatements": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addStatements": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addStatements": [
+                {}
+              ]
+            }
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/DrainECSHook/Function/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "transendenceClusterDefaultAutoScalingGroupDrainECSHookFunctionServiceRoleDefaultPolicy25DBDF6F"
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/DrainECSHook/Function/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "transendenceClusterDefaultAutoScalingGroupDrainECSHookFunction5587AF7D"
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/DrainECSHook/Function/LogGroup": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "logGroupName": "*"
+            }
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/DrainECSHook/Function/LogGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "transendenceClusterDefaultAutoScalingGroupDrainECSHookFunctionLogGroup86D74698"
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/DrainECSHook/Function/AllowInvoke:ecsclusterstacktransendenceClusterDefaultAutoScalingGroupLifecycleHookDrainHookTopic94466912": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "transendenceClusterDefaultAutoScalingGroupDrainECSHookFunctionAllowInvokeecsclusterstacktransendenceClusterDefaultAutoScalingGroupLifecycleHookDrainHookTopic944669129CC591A6"
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/DrainECSHook/Function/Topic": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "topic": "*",
+              "endpoint": "*",
+              "protocol": "lambda",
+              "filterPolicy": "*",
+              "filterPolicyWithMessageBody": "*",
+              "region": "*",
+              "deadLetterQueue": "*"
+            }
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/DrainECSHook/Function/Topic/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "transendenceClusterDefaultAutoScalingGroupDrainECSHookFunctionTopicD0E2E92E"
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/LifecycleHookDrainHook": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "autoScalingGroup": "*",
+              "lifecycleTransition": "autoscaling:EC2_INSTANCE_TERMINATING",
+              "defaultResult": "CONTINUE",
+              "notificationTarget": "*",
+              "heartbeatTimeout": "*"
+            }
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/LifecycleHookDrainHook/Topic": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "masterKey": "*"
+            }
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/LifecycleHookDrainHook/Topic/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "transendenceClusterDefaultAutoScalingGroupLifecycleHookDrainHookTopicE92965AF"
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/LifecycleHookDrainHook/Role": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "assumedBy": {
+                "principalAccount": "*",
+                "assumeRoleAction": "*"
+              }
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToPrincipalPolicy": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachInlinePolicy": [
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachInlinePolicy": [
+                "*"
+              ]
+            }
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/LifecycleHookDrainHook/Role/ImportRole": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/LifecycleHookDrainHook/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "transendenceClusterDefaultAutoScalingGroupLifecycleHookDrainHookRole4DA26B11"
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/LifecycleHookDrainHook/Role/DefaultPolicy": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachToRole": [
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachToRole": [
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addStatements": [
+                {}
+              ]
+            }
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/LifecycleHookDrainHook/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "transendenceClusterDefaultAutoScalingGroupLifecycleHookDrainHookRoleDefaultPolicy3F60B4C5"
+          }
+        ],
+        "/ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/LifecycleHookDrainHook/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "transendenceClusterDefaultAutoScalingGroupLifecycleHookDrainHookC3C13CC9"
+          }
+        ],
+        "/ecs-cluster-stack/SsmParameterValue:--aws--service--ecs--optimized-ami--amazon-linux-2--recommended--image_id:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SsmParameterValueawsserviceecsoptimizedamiamazonlinux2recommendedimageidC96584B6F00A464EAD1953AFF4B05118Parameter"
+          }
+        ],
+        "/ecs-cluster-stack/ClusterName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ClusterName"
+          }
+        ],
+        "/ecs-cluster-stack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/ecs-cluster-stack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/ecs-cluster-stack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "ecs-cluster-stack"
     },
     "Tree": {
       "type": "cdk:tree",
