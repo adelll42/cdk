@@ -1,3 +1,6 @@
+vpc:
+  name: transendence
+
 security_groups:
   - name: lambda-sg
     description: SG for Lambda Functions

@@ -19,7 +19,7 @@ class IAMStack(Stack):
 
         super().__init__(scope, id, **kwargs)
 
-        config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'iam.yml')
+        config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'roles', 'iam.yml')
         with open(config_path, 'r') as f:
             config = yaml.safe_load(f)
 

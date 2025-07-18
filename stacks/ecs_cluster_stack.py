@@ -21,11 +21,12 @@ class ECSClusterStack(Stack):
 
         super().__init__(scope, id, **kwargs)
 
-        config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'ecs_cluster.yml')
+        config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'ecs_cluster', 'ecs_cluster.yml')
         with open(config_path, 'r') as f:
             cluster_config = yaml.safe_load(f)["cluster"]
 
-        vpc_id = get_vpc_id("transendence")
+        vpc_name = cluster_config["vpc"]["name"]
+        vpc_id = get_vpc_id(vpc_name)
         vpc = ec2.Vpc.from_lookup(self, "VpcImported", vpc_id=vpc_id)
 
         cluster_name = cluster_config["name"]
@@ -52,6 +53,11 @@ class ECSClusterStack(Stack):
             min_capacity=min_capacity,
             max_capacity=max_capacity,
             vpc_subnets=ec2.SubnetSelection(subnet_type=subnet_type),
+        )
+        ssm.StringParameter(
+            self, "ClusterNameParameter",
+            parameter_name=f"/transendence/{cluster_name}",
+            string_value=self.cluster.cluster_name
         )
 
         CfnOutput(self, "ClusterName", value=self.cluster.cluster_name)

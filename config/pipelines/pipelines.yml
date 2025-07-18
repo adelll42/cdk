@@ -1,0 +1,18 @@
+pipelines:
+  - name: frontend
+    github:
+      owner: adelll42
+      repo: trans-frontend
+      branch: main
+      secret_name: github-token-adel
+    ecr_repo: frontend
+    image_definition_file: frontend-imagedefinitions.json
+
+  - name: backend
+    github:
+      owner: adelll42
+      repo: trans-backend
+      branch: main
+      secret_name: github-token-adel
+    ecr_repo: backend
+    image_definition_file: backend-imagedefinitions.json

@@ -4,3 +4,5 @@ cluster:
   min_capacity: 1
   max_capacity: 2
   subnet_type: PUBLIC
+  vpc:
+    name: transendence

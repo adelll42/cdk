@@ -10,7 +10,12 @@ import yaml
 
 
 class ACMStack(Stack):
-    def __init__(self, scope: Construct, id: str, **kwargs):
+    def __init__(
+            self, 
+            scope: Construct, 
+            id: str, 
+            **kwargs
+        ):
         super().__init__(scope, id, **kwargs)
 
         config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'acm.yml')

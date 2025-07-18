@@ -11,14 +11,13 @@ from stacks.vpc_stack import VpcStack
 from stacks.security_stack import SecurityStack
 from stacks.s3_stack import S3Stack
 from stacks.ecs_services_stack import ECSServicesStack
-from stacks.pipeline_stack import BackendPipelineStack, FrontendPipelineStack
 from stacks.ecs_cluster_stack import ECSClusterStack
 from stacks.alb_stack import ALBStack
 from stacks.acm_stack import ACMStack
 from stacks.route53_stack import Route53Stack
 from stacks.waf_stack import WAFStack
 from stacks.iam_stack import IAMStack
-
+from stacks.pipelines.generic_pipeline import GenericPipelineStack
 
 app = cdk.App()
 
@@ -54,13 +53,23 @@ ecs_cluster_stack = ECSClusterStack(
     env=env
     )
 
-# ecs_services_stack = ECSServicesStack(
-#     app,
-#     "ecs-services-stack",
-#     vpc=vpc,
-#     env=env
-#     )
+ecs_services_stack = ECSServicesStack(
+    app,
+    "ecs-services-stack",
+    env=env
+    )
 
+# services = {
+#     "frontend": frontend_service,
+#     "backend": backend_service
+# }
+
+# GenericPipelineStack(app, "PipelineStack",
+#     vpc=vpc,
+#     cluster=cluster,
+#     services=services,
+#     env=env
+# )
 
 # backend_pipeline_stack = BackendPipelineStack(
 #     app,

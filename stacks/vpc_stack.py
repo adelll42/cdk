@@ -14,7 +14,7 @@ class VpcStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, **kwargs):
         super().__init__(scope, construct_id, **kwargs)
 
-        config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'vpcs.yml')
+        config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'vpcs' , 'vpcs.yml')
         with open(config_path, 'r') as file:
             config = yaml.safe_load(file)
 

@@ -19,7 +19,7 @@ class S3Stack(Stack):
 
         super().__init__(scope, id, **kwargs)
 
-        config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 's3.yml')
+        config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 's3','s3.yml')
         with open(config_path, 'r') as file:
             config = yaml.safe_load(file)
 

@@ -18,15 +18,15 @@ class SecurityStack(Stack):
         
         super().__init__(scope, id, **kwargs)
 
-        vpc_id = get_vpc_id("transendence")
-        self.vpc = ec2.Vpc.from_lookup(self, "VpcImported", vpc_id=vpc_id)
-
-
         self.sg_lookup = {}
 
-        config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'security_groups.yml')
+        config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'sg', 'security_groups.yml')
         with open(config_path, 'r') as file:
             config = yaml.safe_load(file)
+
+        vpc_name = config["vpc"]["name"]
+        vpc_id = get_vpc_id(vpc_name)
+        self.vpc = ec2.Vpc.from_lookup(self, "VpcImported", vpc_id=vpc_id)
 
         for sg_def in config["security_groups"]:
             name = sg_def["name"]

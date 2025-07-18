@@ -567,10 +567,23 @@
     "aws:cdk:path": "ecs-cluster-stack/transendenceCluster/DefaultAutoScalingGroup/LifecycleHookDrainHook/Resource"
    }
   },
+  "ClusterNameParameter5DC028E2": {
+   "Type": "AWS::SSM::Parameter",
+   "Properties": {
+    "Name": "/transendence/transendence-cluster",
+    "Type": "String",
+    "Value": {
+     "Ref": "transendenceCluster96817F64"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ecs-cluster-stack/ClusterNameParameter/Resource"
+   }
+  },
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/81WTW/bOBD9LeUxYLSpe/PNdb1dYxPHa6vowQiCMTW2Z02RAjlM1hD03xfUV+R4ERQFiuzBMDWcr/f4NNQoGd2MkpsP8OyvVXa81rRNyjWDOsoVehucwo24EvKN34OEZ/9YovJJOdXBM7pNKVSzWkCOYlx7PhWqXlWyFJBlUyhAEZ/EuC5Qihz+ebHVETmZV5anQq3D1iB7MS6Fr5fpqYgllmGrSYlKCjKewShsN65E9dDWnAS2awWazP6rs6EY1FYHMjjPYd+G3VQP1YOc7kwLqZIQ2PomOClfZ9qUPT55lq01hSID7jpaYaFBYe35yzA3iL95dF+AoUHa8ZDaldW4tJpU5L+sfmajZuc1D/KWdqhOSuMf1h43pYALymtQunNLHRhPTNaIsRhQPJ5NR4/zxTqdLKazx3S2upsvJul88VVIkeEOguYV+qBZjMX0fpHOF99mQgpjmXakICZMwe2R24IHBMdbBE4pRxu4FUbEcNZyJVGNknKNKjji0+Xhgtb2eaL1feCtDSYTY3YBm0xnUfIWglGHFPNCA+Om/C9dXJxbRMdAGrM7a4itI7MX4x1oj1L4Yf5OWf0JN+15bxUBY6ONeTHJMofet9u+sHxfRHY6y1ZbdfyCT6TQv2pq6eyOdNfXEU9LIDck7gxgJQnypIw62ZTCWY2Dlx+8Dzlmn09Rw4Ujo6gAPVHKBsNnPjF+olpBXImqF+Cyi7qQJzOow9xoMi8K7dX+5ubbed/e/WlE8bU3sMesTkmR9locL7bTxJnzyfX/g/8u1P0yNmo9x2qysbf3QhPQDL+LPJfmLFszMOZo2J+R8cPmdyr7Pk3WpDd8x9X8fOxUUkO+zSApfw+m1kD8rLBZN1IOYDKNrn1ywTD144YHQ14KNE/krImlh3fjbGjuvnLarrqSdYfocvKerKmktnuflLe2v/V1u+xnXTsaW3MlvfFJuQ5brxwVLQq2Bam+uayw1Ou+cJatslqMRQNfSLEjzeg6wdZuQ9N34sMdeg97/GyzzsPhvntt4p0C2S0yo/srYBg2OuxMprGvehbFT54/8TRwrPeqqiYEHOTI6OLDfeAicCWXJz5Y89un5OMo+fThb0903Z5Jsmr+/wVa9IsmbAoAAA=="
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/81WS2/jNhD+LctjwKip96ab1+tujSaOa2vbgxEEY2pss6ZIghwmNQT994J6RYoXwWKBRXowTM17Pn4ccpJMbibJzQd49tciP10ruUvKDYE48TV6E5zALbti/I3fA4dn/1ii8Ek5U8ETum3JRLNaQoEsrS2frKhXFS8Z5PkMLAhJZ5bWCUpWwL8vstqjkPqV5MmKTdhpJM/Skvl6mZ1tTLEKOyUFqziT2hNoga3iilUPbc5pILMRoKQ+fHEm2EFucZQaFwUcWreb6qF64LO9bluqOAQyvnFOyteRtmXfHx9Fa0XB5kBdRWu0CgTWlj+t56bjrx7dZyBoOu1wyMzaKFwZJUXEv6x+RFGj8xoHfiv3KM5C4e/GnLYlgwvI66ZUZ5Y50F6SNJqlbABxOp9NHhfLTTZdzuaP2Xx9t1hOs8XyC+Msxz0ERWv0QRFL2ex+mS2WX+eMM21I7qWAGDADd0BqEx4RHO0QKJMFmkAtMWIPo5IrjmKSlBsUwUk6X24uKGWep0rdB9qZoHOWkgvYRBp58VsIWhwzLKwCwm35LV5c7FvsjkAqzO+MlmSc1AeW7kF55MwP43fM6ne4Kc97IyQQNtxY2GmeO/S+VXtr6N5GdDrJThlx+oxPUqB/VdTKmb1UXV0nPK9AuiFwowYrLqFIysiTbcmcUTg4/OB9KDD/dI4ctk5qIS2oqRAmaBrZRP+paAlxxaqegKvO64KeRCCOC62kfmFoz/Y3lW/HfVv7wx3FY6/hgHkdUkbYa3K8yM5Tp8eT6//X/rtA99PQqPkcs/FG3t4LjUMz/C7iXIrzfENAWKAmPwLju8XvlPZ9iqxBb/COq8V47FRcQbHLISl/C7rmQHxWmLwbKUfQuULXfrmgSfbjhgZDnjPUT9IZHVMP78b5UNy9ctqqupR1hegK6b00uuLKHHxS3pr+1lftsp917WhsxRX32iflJuy8cNK2XZCxUvTF5dbInvfWGTLCKJaypn3G2V4qQtcRtjYbiv6WdLxD7+GAn0zeWTg8dMcm3imQ3yIRuj8DhmGhw8p4FuuqZ1F88vyB54Fhrau490V8IMZraQUOCmyee7ZbD2a+r63+AjVK2HtV1egzftwHsoEqvjrT0ehfPia/TpKPH/7xUl63+5usm///AFT6HDu4CgAA"
    },
    "Metadata": {
     "aws:cdk:path": "ecs-cluster-stack/CDKMetadata/Default"
