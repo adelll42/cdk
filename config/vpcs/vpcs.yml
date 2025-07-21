@@ -9,5 +9,5 @@ vpcs:
       - name: Private
         type: PRIVATE_ISOLATED
         cidr_mask: 24
-    nat_gateways: 1
+    nat_gateways: 0
     restrict_default_security_group: False
