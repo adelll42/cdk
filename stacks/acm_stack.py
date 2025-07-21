@@ -7,6 +7,7 @@ from aws_cdk import (
 from constructs import Construct
 import os
 import yaml
+from helpers.config_loader import load_yaml_config
 
 
 class ACMStack(Stack):
@@ -18,9 +19,7 @@ class ACMStack(Stack):
         ):
         super().__init__(scope, id, **kwargs)
 
-        config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'acm', 'acm.yml')
-        with open(config_path, 'r') as f:
-            config = yaml.safe_load(f)
+        config = load_yaml_config('config/acm/acm.yml')
 
         certs = config.get("certificates", [])
 

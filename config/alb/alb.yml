@@ -4,21 +4,27 @@ vpc:
 cluster:
   name: transendence-cluster
   
+certificate:
+  ssm_param: "/transendence/certificates/dev-cert/arn"
+
 alb:
-  name: AppALB
+  name: transendence-alb
+  endpoint_ssm: "/transendence/alb/arn"
   redirect_http: true
+
   services:
-    - name: backend
-      ecs_service_ssm_param: "/transendence/ecs/services/backend/service_name"
     - name: frontend
       ecs_service_ssm_param: "/transendence/ecs/services/frontend/service_name"
+    - name: backend
+      ecs_service_ssm_param: "/transendence/ecs/services/backend/service_name"
+
   target_groups:
     frontend:
       port: 80
-      health_path: "/"
+      health_path: /
     backend:
       port: 3000
-      health_path: "/api/health"
+      health_path: /api/health
 
   routing:
     - name: ApiRoute

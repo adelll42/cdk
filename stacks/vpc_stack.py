@@ -8,16 +8,19 @@ import yaml
 import os
 import random
 from helpers.get_or_create_parameter import get_or_create_parameter
-
+from helpers.config_loader import load_yaml_config
 
 class VpcStack(Stack):
-    def __init__(self, scope: Construct, construct_id: str, **kwargs):
+    def __init__(
+            self, 
+            scope: Construct, 
+            construct_id: str, 
+            **kwargs
+            ):
+
         super().__init__(scope, construct_id, **kwargs)
 
-        config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'vpcs' , 'vpcs.yml')
-        with open(config_path, 'r') as file:
-            config = yaml.safe_load(file)
-
+        config = load_yaml_config('config/vpcs/vpcs.yml')
         vpcs = config.get("vpcs", [])
 
         for vpc_def in vpcs:

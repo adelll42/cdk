@@ -7,7 +7,7 @@ from aws_cdk import (
 from constructs import Construct
 import os
 import yaml
-
+from helpers.config_loader import load_yaml_config
 
 class S3Stack(Stack):
     def __init__(
@@ -18,11 +18,7 @@ class S3Stack(Stack):
         ):
 
         super().__init__(scope, id, **kwargs)
-
-        config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 's3','s3.yml')
-        with open(config_path, 'r') as file:
-            config = yaml.safe_load(file)
-
+        config = load_yaml_config('config/s3/s3.yml')
         bucket_cfg = config["bucket"]
 
         bucket_name = bucket_cfg["name"]

@@ -15,6 +15,7 @@ from aws_cdk import (
 from constructs import Construct
 from aws_cdk import aws_ssm as ssm
 from helpers.vpc_lookup import get_vpc_id
+from helpers.config_loader import load_yaml_config
 
 ####for stages is there a way to use one automation for all the stages?
 class GenericPipelineStack(Stack):
@@ -25,11 +26,7 @@ class GenericPipelineStack(Stack):
             **kwargs
         ):
         super().__init__(scope, id, **kwargs)
-
-        config_path = os.path.join(os.path.dirname(__file__), '..', '..', 'config', 'pipelines', 'pipelines.yml')
-        with open(config_path, 'r') as f:
-            config = yaml.safe_load(f)
-
+        config = load_yaml_config('config/pipelines/pipelines.yml')
         vpc_name = config["vpc"]["name"]
         vpc_id = get_vpc_id(vpc_name)
         vpc = ec2.Vpc.from_lookup(self, "VpcImported", vpc_id=vpc_id)

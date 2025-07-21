@@ -9,6 +9,7 @@ from aws_cdk import (
 )
 from constructs import Construct
 from helpers.vpc_lookup import get_vpc_id
+from helpers.config_loader import load_yaml_config
 
 
 class ECSClusterStack(Stack):
@@ -20,12 +21,11 @@ class ECSClusterStack(Stack):
         ):
 
         super().__init__(scope, id, **kwargs)
+        full_config = load_yaml_config('config/ecs/cluster.yml')
+        cluster_config = full_config["cluster"]
 
-        config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'ecs_cluster', 'ecs_cluster.yml')
-        with open(config_path, 'r') as f:
-            cluster_config = yaml.safe_load(f)["cluster"]
 
-        vpc_name = cluster_config["vpc"]["name"]
+        vpc_name = full_config["vpc"]["name"]
         vpc_id = get_vpc_id(vpc_name)
         vpc = ec2.Vpc.from_lookup(self, "VpcImported", vpc_id=vpc_id)
 

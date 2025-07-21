@@ -6,7 +6,7 @@ from aws_cdk import (
 )
 from constructs import Construct
 from aws_cdk import aws_ssm as ssm
-
+from helpers.config_loader import load_yaml_config
 
 
 class IAMStack(Stack):
@@ -19,10 +19,7 @@ class IAMStack(Stack):
 
         super().__init__(scope, id, **kwargs)
 
-        config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'roles', 'iam.yml')
-        with open(config_path, 'r') as f:
-            config = yaml.safe_load(f)
-
+        config = load_yaml_config('config/roles/iam.yml')
         self.roles = {}
 
         for role_def in config.get("roles", []):

@@ -16,7 +16,7 @@ from stacks.acm_stack import ACMStack
 from stacks.route53_stack import Route53Stack
 from stacks.waf_stack import WAFStack
 from stacks.iam_stack import IAMStack
-from stacks.pipelines.generic_pipeline import GenericPipelineStack
+from stacks.generic_pipeline import GenericPipelineStack
 
 app = cdk.App()
 
@@ -85,9 +85,7 @@ route53_stack = Route53Stack(
 # waf_stack = WAFStack(
 #     app,
 #     "waf-stack",
-#     alb=alb_stack.alb,
 #     env=env
 # )
-
 
 app.synth()

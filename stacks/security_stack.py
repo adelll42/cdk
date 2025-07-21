@@ -6,7 +6,7 @@ from aws_cdk import (
 from constructs import Construct
 from aws_cdk import aws_ssm as ssm
 from helpers.vpc_lookup import get_vpc_id
-
+from helpers.config_loader import load_yaml_config
 
 class SecurityStack(Stack):
     def __init__(
@@ -20,9 +20,7 @@ class SecurityStack(Stack):
 
         self.sg_lookup = {}
 
-        config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'sg', 'security_groups.yml')
-        with open(config_path, 'r') as file:
-            config = yaml.safe_load(file)
+        config = load_yaml_config('config/sg/security_groups.yml')
 
         vpc_name = config["vpc"]["name"]
         vpc_id = get_vpc_id(vpc_name)

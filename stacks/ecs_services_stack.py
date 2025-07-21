@@ -13,6 +13,7 @@ from aws_cdk import (
 from constructs import Construct
 from aws_cdk.aws_ecs import LogDrivers
 from helpers.vpc_lookup import get_vpc_id
+from helpers.config_loader import load_yaml_config
 
 
 class ECSServicesStack(Stack):
@@ -24,9 +25,7 @@ class ECSServicesStack(Stack):
     ):
         super().__init__(scope, id, **kwargs)
 
-        config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'services', 'ecs_services.yml')
-        with open(config_path, 'r') as f:
-            config = yaml.safe_load(f)
+        config = load_yaml_config('config/ecs/services.yml')
 
         vpc_name = config["vpc"]["name"]
         vpc_id = get_vpc_id(vpc_name)
@@ -101,7 +100,8 @@ class ECSServicesStack(Stack):
             self, f"{name.capitalize()}Service",
             cluster=cluster,
             task_definition=task_def,
-            desired_count=1
+            desired_count=1,
+            service_name=name,
         )
 
         ssm.StringParameter(
