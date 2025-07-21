@@ -1,0 +1,9 @@
+.venv
+__pycache__
+cdk.out
+node_modules
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+*.db
