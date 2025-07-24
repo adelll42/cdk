@@ -1,17 +1,9 @@
 pipelines:
-  - name: backend
-    github:
-      owner: adelll42
-      repo: trans-backend
-      branch: main
-      secret_name: github-token-adel
-    ecr_repo: backend
-    image_definition_file: backend-imagedefinitions.json
-    vpc: transendence
-    cluster: transendence-cluster
-  
-
   - name: frontend
+    stages:
+      - source
+      - build
+      - deploy
     github:
       owner: adelll42
       repo: trans-frontend
@@ -19,6 +11,19 @@ pipelines:
       secret_name: github-token-adel
     ecr_repo: frontend
     image_definition_file: frontend-imagedefinitions.json
-    vpc: transendence
     cluster: transendence-cluster
-  
+    vpc: transendence
+
+  - name: backend
+    stages:
+      - source
+      - deploy
+    github:
+      owner: adelll42
+      repo: trans-backend
+      branch: main
+      secret_name: github-token-adel
+    ecr_repo: backend
+    image_definition_file: backend-imagedefinitions.json
+    cluster: transendence-cluster
+    vpc: transendence

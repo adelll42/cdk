@@ -1,10 +1,7 @@
-import os
-import yaml
 from aws_cdk import (
     aws_iam as iam,
 )
 from constructs import Construct
-from aws_cdk import aws_ssm as ssm
 from helpers.tools import tools
 
 
@@ -28,8 +25,8 @@ class IAMStack(tools):
             description = role_def.get("description", role_name)
 
             role = iam.Role(
-                self, f"{role_name}-{service}-role",
-                role_name=f"tmp-{role_name}",
+                self, self.logical_id_generator(app_name, role_name, service),
+                role_name=f"tmp-{role_name}-role",
                 assumed_by=iam.ServicePrincipal(service),
                 description=description
             )
